@@ -1,0 +1,403 @@
+****************************************************************************************************
+                            _          
+     /\                    | |         
+    /  \   _ __   __ _  ___| |__   ___ 
+   / /\ \ | '_ \ / _` |/ __| '_ \ / _ \
+  / ____ \| |_) | (_| | (__| | | |  __/
+ /_/    \_\ .__/ \__,_|\___|_| |_|\___|
+          | |                          
+          |_|                          
+
+*****************************************************************************************************
+Aprire il file httpd.conf
+
+modificare la variabile SRVROOT di modo che punti alla cartella di apache
+inoltre per gestire i virtualhost e alcune directory ho definito le variabili ZAMPROOT (root cartella zamp) e SITEROOT (root cartella dei siti)
+	
+	Define ZAMPROOT "h:/zamp_2020_01"
+	Define SRVROOT  "${ZAMPROOT}/programs/Apache24"
+	Define SITEROOT "${ZAMPROOT}/sites"
+	Define HTTP_PORT  "8081"
+	Define HTTPS_PORT  "445"
+	
+cambiare porta eventualmente
+
+	Listen ${HTTP_PORT}
+
+abilitare mod_rewrite.so e i seguenti moduli
+
+	LoadModule access_compat_module modules/mod_access_compat.so
+	LoadModule actions_module modules/mod_actions.so
+	LoadModule alias_module modules/mod_alias.so
+	LoadModule allowmethods_module modules/mod_allowmethods.so
+	LoadModule asis_module modules/mod_asis.so
+	LoadModule auth_basic_module modules/mod_auth_basic.so
+	LoadModule authn_core_module modules/mod_authn_core.so
+	LoadModule authn_file_module modules/mod_authn_file.so
+	LoadModule authz_core_module modules/mod_authz_core.so
+	LoadModule authz_groupfile_module modules/mod_authz_groupfile.so
+	LoadModule authz_host_module modules/mod_authz_host.so
+	LoadModule authz_user_module modules/mod_authz_user.so
+	LoadModule autoindex_module modules/mod_autoindex.so
+	LoadModule cgi_module modules/mod_cgi.so
+	LoadModule dav_lock_module modules/mod_dav_lock.so
+	LoadModule dir_module modules/mod_dir.so
+	LoadModule env_module modules/mod_env.so
+	LoadModule headers_module modules/mod_headers.so
+	LoadModule include_module modules/mod_include.so
+	LoadModule info_module modules/mod_info.so
+	LoadModule isapi_module modules/mod_isapi.so
+	LoadModule log_config_module modules/mod_log_config.so
+	LoadModule cache_disk_module modules/mod_cache_disk.so
+	LoadModule mime_module modules/mod_mime.so
+	LoadModule negotiation_module modules/mod_negotiation.so
+	LoadModule proxy_module modules/mod_proxy.so
+	LoadModule proxy_ajp_module modules/mod_proxy_ajp.so
+	LoadModule rewrite_module modules/mod_rewrite.so
+	LoadModule setenvif_module modules/mod_setenvif.so
+	LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
+	LoadModule ssl_module modules/mod_ssl.so
+	LoadModule status_module modules/mod_status.so
+
+
+scommentare linea ServerName e settare il server name
+	ServerName localhost:${HTTP_PORT}
+	
+dentro la definizione della directory htdocs settare allow override All
+	<Directory "${SRVROOT}/htdocs">
+		AllowOverride All
+		....
+
+Scommentare la direttiva per aggiungere il file virtual host
+	Include conf/extra/httpd-vhosts.conf
+	
+Aprire il file httpd-vhosts.conf e e ci deve essere solo questo virtual host di default (deve stare per ultimo o per primo tra tutti i siti che definisco all'interno di questo file, dipende, per ora è per ultimo)
+
+	<VirtualHost *:${HTTP_PORT}>
+		DocumentRoot "${SRVROOT}/htdocs"
+		<Directory "${SRVROOT}/htdocs">
+			DirectoryIndex index.php index.html
+			Options -Indexes +FollowSymLinks
+			AllowOverride All
+			Require all granted
+		</Directory>
+	</VirtualHost>
+
+
+Per lanciare httpd.exe basta lanciare
+	httpd.exe
+Per installare come servizio lanciare un cmd come admini e lanciare
+	httpd.exe -k install
+
+
+
+********************************************************************************************************
+  _____  _    _ _____  
+ |  __ \| |  | |  __ \ 
+ | |__) | |__| | |__) |
+ |  ___/|  __  |  ___/ 
+ | |    | |  | | |     
+ |_|    |_|  |_|_|     
+                       
+********************************************************************************************************
+Scaricare la versione thread safe e unzippare il file creando la relativa cartella
+nella cartella ext ho scaricato xdebug
+
+Per aggiungere php aggiungere all'inizio del file httpd.conf (dove definisco ZAMPROOT) la variabile
+	Define PHPROOT  "${ZAMPROOT}/programs/php7.4.2"
+
+Poco più sotto aggiungere le seguenti linee
+
+	AddHandler application/x-httpd-php .php
+	AddType application/x-httpd-php .php .html
+	LoadFile "${PHPROOT}/php7ts.dll"
+	LoadFile "${PHPROOT}/libpq.dll"
+	LoadModule php7_module "${PHPROOT}/php7apache2_4.dll"
+	PHPIniDir "${PHPROOT}"
+
+
+copiare il file php.ini-development e rinominare in php.ini
+ho modificato il file php.ini nel modo seguente
+
+	max_execution_time = 300
+	max_input_time = 300
+	memory_limit = 256M
+	post_max_size = 1052M
+	upload_max_filesize = 1024M
+
+specificare il percorso assoluto per extension_dir
+	extension_dir="Q:\zamp\php-7.3.10\ext"
+
+
+Abilitare le seguenti estensioni
+	extension=curl
+	extension=gd2
+	extension=mbstring
+	extension=mysqli
+	extension=openssl
+	extension=pdo_mysql
+	extension=sockets
+	extension=xmlrpc
+
+
+aggiungere in fondo (correggendo il percorso corretto)
+	zend_extension = "D:\zamp\php-7.3.9\ext\php_xdebug-2.8.0beta2-7.3-vc15-x86_64.dll"
+	[xDebug]
+	xdebug.remote_enable = 1
+	xdebug.remote_autostart=on
+	
+	
+per me aggiungere 
+date.timezone = "Europe/Rome"
+
+
+************************************************************************************************************
+  __  __            _       _____  ____  
+ |  \/  |          (_)     |  __ \|  _ \ 
+ | \  / | __ _ _ __ _  __ _| |  | | |_) |
+ | |\/| |/ _` | '__| |/ _` | |  | |  _ < 
+ | |  | | (_| | |  | | (_| | |__| | |_) |
+ |_|  |_|\__,_|_|  |_|\__,_|_____/|____/ 
+                                         
+************************************************************************************************************
+
+per installare mariadb ho scaricato l'eseguibile (che installa anche heidesql)
+il file my.ini si trova dentro la cartella \data della directory dy mariadb
+
+
+oppure partendo dallo zip unzipppare in una cartello lo zip e lanciare l'eseguibile
+	mysql_install_db.exe --password=root
+Che crea alcune cose di servizi, il file my.ini si trova dentro la cartella \data
+dentro il file ini è possibile cambiare la porta di default
+
+	[mysqld]
+	.....
+	port=3309
+
+o nel caso per migliorare le performance
+
+	[mysqld]
+	.....
+	port=3309
+
+	innodb_file_per_table=1
+	innodb_buffer_pool_size = 1G
+	innodb_flush_log_at_trx_commit = 0
+	innodb_flush_method = O_DIRECT
+
+	query_cache_type = 1
+	query_cache_limit = 256K
+	query_cache_min_res_unit = 2k
+	query_cache_size = 128M
+
+	tmp_table_size=256M 
+	max_heap_table_size=256M
+
+	wait_timeout=60
+	max_connections=200
+
+
+dentro la cartella root di mariadb creare anche una cartella temp
+	temp
+che servirà per far puntare i file di temp di maridb (vedere il file my.ini per tutte le configurazioni)
+
+
+
+
+********************************************************************************************************
+  _____  _    _ _____  __  __                   _           _       
+ |  __ \| |  | |  __ \|  \/  |         /\      | |         (_)      
+ | |__) | |__| | |__) | \  / |_   _   /  \   __| |_ __ ___  _ _ __  
+ |  ___/|  __  |  ___/| |\/| | | | | / /\ \ / _` | '_ ` _ \| | '_ \ 
+ | |    | |  | | |    | |  | | |_| |/ ____ \ (_| | | | | | | | | | |
+ |_|    |_|  |_|_|    |_|  |_|\__, /_/    \_\__,_|_| |_| |_|_|_| |_|
+                               __/ |                                
+                              |___/                                 
+
+********************************************************************************************************
+
+per installare phpmyadmin scaricare lo zip. Da config.sample.inc.php craare il file config.inc.php e modificare il file come di seguito
+	$cfg['Servers'][$i]['auth_type'] = 'config';
+	$cfg['Servers'][$i]['user'] = 'root';
+	$cfg['Servers'][$i]['password'] = 'root';
+	$cfg['Servers'][$i]['host'] = '127.0.0.1';
+	$cfg['Servers'][$i]['port'] = '3309';
+	$cfg['Servers'][$i]['connect_type'] = 'tcp';
+	$cfg['Servers'][$i]['extension'] = 'mysqli';
+
+
+
+scommentare le righe sotto i commenti
+	/* User used to manipulate with storage */
+	/* Storage database and tables */
+facendo attenzione a settare correttamente le seguenti voci
+	$cfg['Servers'][$i]['controlhost'] = '127.0.0.1';
+	$cfg['Servers'][$i]['controlport'] = '3309';
+	$cfg['Servers'][$i]['controluser'] = 'pma';
+	$cfg['Servers'][$i]['controlpass'] = 'pmapwd';
+
+scommentare le righe sotto
+	/* Storage database and tables */
+	$cfg['Servers'][$i]['pmadb'] = 'phpmyadmin';
+	$cfg['Servers'][$i]['bookmarktable'] = 'pma__bookmark';
+	$cfg['Servers'][$i]['relation'] = 'pma__relation';
+	$cfg['Servers'][$i]['table_info'] = 'pma__table_info';
+	$cfg['Servers'][$i]['table_coords'] = 'pma__table_coords';
+	$cfg['Servers'][$i]['pdf_pages'] = 'pma__pdf_pages';
+	$cfg['Servers'][$i]['column_info'] = 'pma__column_info';
+	$cfg['Servers'][$i]['history'] = 'pma__history';
+	$cfg['Servers'][$i]['table_uiprefs'] = 'pma__table_uiprefs';
+	$cfg['Servers'][$i]['tracking'] = 'pma__tracking';
+	$cfg['Servers'][$i]['userconfig'] = 'pma__userconfig';
+	$cfg['Servers'][$i]['recent'] = 'pma__recent';
+	$cfg['Servers'][$i]['favorite'] = 'pma__favorite';
+	$cfg['Servers'][$i]['users'] = 'pma__users';
+	$cfg['Servers'][$i]['usergroups'] = 'pma__usergroups';
+	$cfg['Servers'][$i]['navigationhiding'] = 'pma__navigationhiding';
+	$cfg['Servers'][$i]['savedsearches'] = 'pma__savedsearches';
+	$cfg['Servers'][$i]['central_columns'] = 'pma__central_columns';
+	$cfg['Servers'][$i]['designer_settings'] = 'pma__designer_settings';
+	$cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';
+
+in fondo al file aggiungere
+	//$cfg['DBG']['sql'] = true;
+	$cfg['Servers'][$i]['DisableIS'] = true;
+	
+
+la prima volta che si entra dentro a phpmyadmin lanciare il file "create_tables.sql" dentro lacartella "sql" 
+
+F:\zamp\Apps\mariadb-10.4.12\bin\mysql -u root --password=root -h localhost --port=3309 < "H:\zamp_2020_01\site\pma5.0.1\sql\create_tables.sql"
+
+e poi lanciare le query
+F:\zamp\Apps\mariadb-10.4.12\bin\mysql -u root --password=root -h localhost --port=3309 -e "CREATE USER 'pma'@'localhost' IDENTIFIED BY 'pmapwd';GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' WITH GRANT OPTION;FLUSH PRIVILEGES;"
+che crea l'utente pma per il db phpmyadmin
+
+Nel caso posisizionare il sito sotto htdocs oppure creare un sito e il relativo virtual host di apache
+	<VirtualHost *:8081>
+		ServerAdmin simone.reciv@gmail.com
+		DocumentRoot "${ZAMPROOT}/pma-4.9.0.1"
+		ServerName zamp.pma
+		ServerAlias www.zamp.pma
+		
+		<Directory "${ZAMPROOT}/pma-4.9.0.1" >
+			DirectoryIndex index.html index.php
+			Options -Indexes +FollowSymLinks
+			AllowOverride All
+			Require all granted
+		</Directory>
+		
+		ErrorLog " ${ZAMPROOT}/logs/pma-error.log"
+		CustomLog "${ZAMPROOT}/logs/pma-access.log" common
+	</VirtualHost>
+ricordarsi che se si crea un virtualhost occorre anche modificare il file hosts di windows
+	
+
+
+***********************************************************************************************************
+ __      ___      _               _ _    _           _   
+ \ \    / (_)    | |             | | |  | |         | |  
+  \ \  / / _ _ __| |_ _   _  __ _| | |__| | ___  ___| |_ 
+   \ \/ / | | '__| __| | | |/ _` | |  __  |/ _ \/ __| __|
+    \  /  | | |  | |_| |_| | (_| | | |  | | (_) \__ \ |_ 
+     \/   |_|_|   \__|\__,_|\__,_|_|_|  |_|\___/|___/\__|
+                                                         
+Questo  è un esempio di virtualhost con delle virtual directory
+														 
+<VirtualHost *:${HTTP_PORT}>
+	ServerAdmin   admin@admin.com
+	DocumentRoot  "${SITEROOT}/www.zamptest.com"
+	ServerName    zamptest.com
+	ServerAlias   www.zamptest.com
+	
+	<Directory "${SITEROOT}/www.zamptest.com" >
+		DirectoryIndex index.php index.html
+		Options -Indexes +FollowSymLinks
+		AllowOverride All
+		Require all granted
+	</Directory>
+	
+	# definisco l'alias e sovrascrivo con require al granted  dentro Directory
+	# altrimenti si prende la direttiva definita nel file httpd.conf e non posso accedere alla directory
+	#Alias /imgst "${ZAMPROOT}/static_contents"
+	#<Directory "${ZAMPROOT}/static_contents" >
+	#	AllowOverride All
+	#	Require all granted
+	#</Directory>
+	
+	ErrorLog  "${ZAMPROOT}/logs/zamptest-error.log"
+	CustomLog "${ZAMPROOT}/logs/zamptest-access.log" common
+</VirtualHost>
+
+***********************************************************************************************************
+
+
+
+
+
+***********************************************************************************************************
+ __   _______       _                 
+ \ \ / /  __ \     | |                
+  \ V /| |  | | ___| |__  _   _  __ _ 
+   > < | |  | |/ _ \ '_ \| | | |/ _` |
+  / . \| |__| |  __/ |_) | |_| | (_| |
+ /_/ \_\_____/ \___|_.__/ \__,_|\__, |
+                                 __/ |
+                                |___/ 
+***********************************************************************************************************
+
+
+Per fare il debug è suff aprire vs code e installare il plugin
+	php debug
+poi aprire la cartella del progetto, dalla barra di sinstra cliccare sull'icona bug (che indica la sezione debug)
+aggiungere la configurazione php cliccando sul tasto rettangolo verde e poi "add configuration"
+dalla voce di menu che compare selezionare php
+non modificare altro a questo punto dovrebbe essere possibile debuggare (navigando con il browser sulla pagina desiderata vs code si dovrebbe fermare)
+
+
+***********************************************************************************************************
+  ______                         _                                                      _ 
+ |  ____|                       (_)                                                    (_)
+ | |__   ___  ___  ___ _   _ _____  ___  _ __   ___   _ __  _ __ ___   ___ ___  ___ ___ _ 
+ |  __| / __|/ _ \/ __| | | |_  / |/ _ \| '_ \ / _ \ | '_ \| '__/ _ \ / __/ _ \/ __/ __| |
+ | |____\__ \  __/ (__| |_| |/ /| | (_) | | | |  __/ | |_) | | | (_) | (_|  __/\__ \__ \ |
+ |______|___/\___|\___|\__,_/___|_|\___/|_| |_|\___| | .__/|_|  \___/ \___\___||___/___/_|
+                                                     | |                                  
+                                                     |_|                                  
+***********************************************************************************************************
+													 
+per lanciare apache lanciare
+httpd.exe
+
+per killare il processo apache
+taskkill /IM "httpd.exe" /F
+
+per lanciare mariadb
+mysqld --console
+
+per killare mariadb
+taskkill /IM "mysqld.exe" /F
+
+
+per vedere la lista dei processi attivi
+tasklist
+
+
+
+*************************************************************************************************************
+  _____                _     _         _____                                  
+  / ____|              | |   (_)       |  __ \                                 
+ | |     __ _ _ __ ___ | |__  _  ___   | |__) |__ _ __ ___ ___  _ __ ___  ___  
+ | |    / _` | '_ ` _ \| '_ \| |/ _ \  |  ___/ _ \ '__/ __/ _ \| '__/ __|/ _ \ 
+ | |___| (_| | | | | | | |_) | | (_) | | |  |  __/ | | (_| (_) | |  \__ \ (_) |
+  \_____\__,_|_| |_| |_|_.__/|_|\___/  |_|   \___|_|  \___\___/|_|  |___/\___/ 
+                                                                               
+*************************************************************************************************************
+PER cambiare percorso devo lanciare il programma modificare i seguenti file
+- httpd.conf - cambiare percorso alla variabile ZAMPROOT
+  Define ZAMPROOT "....."
+- php.ini - cambiare   
+  extension_dir = " .... "
+  zend_extension = " .... "
+- my.ini di mariadb - cambiare tutti i riferimenti al percorso assoluto della cartella zamp
+
+Ricordarsi di settare eventualmente il file host della macchina con i puntamenti ai siti presenti
