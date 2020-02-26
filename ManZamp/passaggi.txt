@@ -264,12 +264,15 @@ in fondo al file aggiungere
 	$cfg['Servers'][$i]['DisableIS'] = true;
 	
 
+lanciare il servizio di mysql con il solito comando
+	mysqld --console
+
 la prima volta che si entra dentro a phpmyadmin lanciare il file "create_tables.sql" dentro lacartella "sql" 
 
-F:\zamp\Apps\mariadb-10.4.12\bin\mysql -u root --password=root -h localhost --port=3309 < "H:\zamp_2020_01\site\pma5.0.1\sql\create_tables.sql"
+	F:\zamp\Apps\mariadb-10.4.12\bin\mysql -u root --password=root -h localhost --port=3309 < "H:\zamp_2020_01\site\pma5.0.1\sql\create_tables.sql"
 
 e poi lanciare le query
-F:\zamp\Apps\mariadb-10.4.12\bin\mysql -u root --password=root -h localhost --port=3309 -e "CREATE USER 'pma'@'localhost' IDENTIFIED BY 'pmapwd';GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' WITH GRANT OPTION;FLUSH PRIVILEGES;"
+	F:\zamp\Apps\mariadb-10.4.12\bin\mysql -u root --password=root -h localhost --port=3309 -e "CREATE USER 'pma'@'localhost' IDENTIFIED BY 'pmapwd';GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' WITH GRANT OPTION;FLUSH PRIVILEGES;"
 che crea l'utente pma per il db phpmyadmin
 
 Nel caso posisizionare il sito sotto htdocs oppure creare un sito e il relativo virtual host di apache
