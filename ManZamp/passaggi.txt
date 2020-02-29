@@ -141,10 +141,30 @@ Abilitare le seguenti estensioni
 
 
 aggiungere in fondo (correggendo il percorso corretto)
-	zend_extension = "D:\zamp\php-7.3.9\ext\php_xdebug-2.8.0beta2-7.3-vc15-x86_64.dll"
 	[xDebug]
+	; path to your php_xdebug extension file
+	; download from https://xdebug.org/wizard.php
+	zend_extension = "D:\zamp\php-7.3.9\ext\php_xdebug-2.8.0beta2-7.3-vc15-x86_64.dll"
+	; disables profiler globally 
+	xdebug.profiler_enable = 0
+	; allows enabling it selectively with request parameter "XDEBUG_PROFILE"
+	xdebug.profiler_enable_trigger = 1
+	; directory to output profiler files to
+	;xdebug.profiler_output_dir = "C:\xampp-php7\tmp"
+	; profiler file name (with request uri and timestamp)
+	;xdebug.profiler_output_name = "%R-%t.cgout"
+	; enables debugger
 	xdebug.remote_enable = 1
-	xdebug.remote_autostart=on
+	; selects the dbgp protocol
+	xdebug.remote_handler = "dbgp"
+	; host where debug client is running
+	xdebug.remote_host = "localhost"
+	; debugger port
+	xdebug.remote_port = 9000
+	; disables xdebug traces in error messages - use https://tracy.nette.org/ instead
+	xdebug.default_enable = "Off"
+	; makes sure that the process does not freeze when there is no debug client
+	xdebug.remote_autostart = 0
 	
 	
 per me aggiungere 

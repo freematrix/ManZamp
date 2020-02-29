@@ -33,6 +33,9 @@ namespace ManZamp.Business
         public string pid_currentproc_mariadb { get; set; }
 
 
+        public string php_vers { get; set; }
+        public string mariadb_vers { get; set; }
+
 
         public string MariaDB_bin
         {
@@ -46,6 +49,13 @@ namespace ManZamp.Business
             get
             {
                 return System.IO.Path.Combine(pathApache, "bin", "httpd.exe");
+            }
+        }
+        public string PHP_bin
+        {
+            get
+            {
+                return System.IO.Path.Combine(pathPHP, "php.exe");
             }
         }
         public string Apache_httpd_conf
@@ -327,6 +337,32 @@ namespace ManZamp.Business
 
             pathBase = abs_main_path;
         }
+        public void get_software_version()
+        {
+            Regex regex;
+            Match match;
+
+
+            php_vers = ManZampLib.startProc_and_wait_output(PHP_bin, "-v");
+            regex = new Regex(@"PHP \d\.\d.\d");
+            match = regex.Match(php_vers);
+            if (match.Success)
+            {
+                php_vers = "PHP Vers: " + match.Value;
+            }
+
+            mariadb_vers = ManZampLib.startProc_and_wait_output(MariaDB_bin, "--version");
+            regex = new Regex(@"Ver \d+\.\d+\.\d+");
+            match = regex.Match(mariadb_vers);
+            if (match.Success)
+            {
+                mariadb_vers = "MariaDB Vers: " + match.Value;
+            }
+
+            
+        }
+
+        #region private
         private void change_path(string oldpath, string newpath)
         {
             string[] arrfiles = { Apache_httpd_conf, PHP_ini, MariaDB_ini };
@@ -445,5 +481,6 @@ namespace ManZamp.Business
             }
             return path;
         }
+        #endregion
     }
 }

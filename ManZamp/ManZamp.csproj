@@ -187,6 +187,8 @@
     <Content Include="icons8-logo-delfino-256.ico" />
     <Content Include="passaggi.txt" />
     <None Include="Resources\iconfinder_f-command_256_282475.png" />
+    <None Include="Resources\php_icona.png" />
+    <None Include="Resources\mariadb_icona.png" />
     <Content Include="todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

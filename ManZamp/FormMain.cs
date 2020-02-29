@@ -55,6 +55,7 @@ namespace ManZamp
                     frm2.Close();
                 }
 
+                cv.get_software_version();
                 refreshStatusForm();
             }
             catch (ConfigurationErrorsException er)
@@ -268,7 +269,10 @@ namespace ManZamp
                 }
                     
             }
-            
+
+
+            lbPHP_ver.Text = cv.php_vers;
+            lbMariaDB_ver.Text = cv.mariadb_vers;
         }
         private void addOutput(string testo)
         {
@@ -319,8 +323,7 @@ namespace ManZamp
             }
         }
 
-        #endregion
 
-        
+        #endregion
     }
 }

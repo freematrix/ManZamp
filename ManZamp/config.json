@@ -22,5 +22,17 @@
     "mariadb_port": "3309",
     "pid_currentproc_apache": "",
     "pid_currentproc_mariadb": ""
+  },
+  "rel": {
+    "pathBase": "F:\\SVL\\zamp_template",
+    "pathMariaDB": "F:\\SVL\\zamp_template\\Apps\\mariadb-10.4.12",
+    "pathApache": "F:\\SVL\\zamp_template\\Apps\\Apache24",
+    "pathPHP": "F:\\SVL\\zamp_template\\Apps\\php-7.4.3",
+    "default_editor_path": "C:\\Program Files\\Notepad++\\notepad++.exe",
+    "apache_http_port": "8081",
+    "apache_https_port": "443",
+    "mariadb_port": "3309",
+    "pid_currentproc_apache": "",
+    "pid_currentproc_mariadb": ""
   }
 }

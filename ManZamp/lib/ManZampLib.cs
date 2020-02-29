@@ -147,6 +147,27 @@ namespace ManZamp.lib
             
             return sout;
         }
+
+        public static string startProc_and_wait_output(string path_exe, string args)
+        {
+            string _outstring = "";
+            Process process = new Process();
+            process.StartInfo.FileName = "cmd.exe";
+            process.StartInfo.Arguments = "/c \"" + path_exe + " " + args + "\"";
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.CreateNoWindow = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.Start();
+            //* Read the output (or the error)
+            _outstring = process.StandardOutput.ReadToEnd();
+            //Console.WriteLine(output);
+            string err = process.StandardError.ReadToEnd();
+            //Console.WriteLine(err);
+            process.WaitForExit();
+            return _outstring;
+        }
+
         public static bool checkRunningProc(string pid)
         {
             if (string.IsNullOrEmpty(pid))
