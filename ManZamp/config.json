@@ -1,9 +1,9 @@
 {
-  "dev_home": {
-    "pathBase": "h:\\zamp",
-    "pathMariaDB": "H:\\zamp\\Apps\\mariadb-10.4.12",
-    "pathApache": "h:\\zamp\\Apps\\Apache24",
-    "pathPHP": "H:\\zamp\\Apps\\php7.4.2",
+  "rel": {
+    "pathBase": "c:\\zamp",
+    "pathMariaDB": "c:\\zamp\\Apps\\mariadb-10.4.12",
+    "pathApache": "c:\\zamp\\Apps\\Apache24",
+    "pathPHP": "c:\\zamp\\Apps\\php-7.4.3",
     "default_editor_path": "C:\\Program Files (x86)\\Notepad++\\notepad++.exe",
     "apache_http_port": "8081",
     "apache_https_port": "443",
@@ -15,7 +15,7 @@
     "pathBase": "F:\\zamp",
     "pathMariaDB": "F:\\zamp\\Apps\\mariadb-10.4.12",
     "pathApache": "F:\\zamp\\Apps\\Apache24",
-    "pathPHP": "F:\\zamp\\Apps\\php7.4.2",
+    "pathPHP": "F:\\zamp\\Apps\\php-7.4.3",
     "default_editor_path": "notepad.exe",
     "apache_http_port": "8081",
     "apache_https_port": "443",
@@ -23,7 +23,7 @@
     "pid_currentproc_apache": "",
     "pid_currentproc_mariadb": ""
   },
-  "rel": {
+  "rel_bk": {
     "pathBase": "F:\\SVL\\zamp_template",
     "pathMariaDB": "F:\\SVL\\zamp_template\\Apps\\mariadb-10.4.12",
     "pathApache": "F:\\SVL\\zamp_template\\Apps\\Apache24",

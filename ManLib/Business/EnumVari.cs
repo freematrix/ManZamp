@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ManZamp.Business
+namespace ManLib.Business
 {
     public enum typeProg : ushort
     {

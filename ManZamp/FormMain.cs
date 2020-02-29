@@ -11,8 +11,8 @@ using System.Diagnostics;
 using System.Configuration;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
-using ManZamp.lib;
-using ManZamp.Business;
+using ManLib;
+using ManLib.Business;
 
 
 namespace ManZamp
@@ -24,9 +24,21 @@ namespace ManZamp
         #endregion
 
         #region constructor
-        public FormMain()
+        public FormMain(string[] args)
         {
             InitializeComponent();
+
+            if(args != null && args.Length == 1 && args[0] == "setup")
+            {
+                ConfigVar _cv = new ConfigVar();
+                string assemblyFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                string root_folder = System.IO.Directory.GetParent(assemblyFolder).Parent.FullName;
+                //root_folder = @"F:\SVL\zamp_template";
+                _cv.updatePath(root_folder);
+                //MessageBox.Show(root_folder);
+                System.Threading.Thread.Sleep(1000);
+                //System.Windows.Forms.Application.Exit();
+            }
         }
         #endregion
 

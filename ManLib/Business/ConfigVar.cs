@@ -1,24 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ManZamp.lib;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace ManZamp.Business
+namespace ManLib.Business
 {
     public class ConfigVar
     {
         public string procMariaDB = "mysqld";
         public string procApache = "httpd";
+        
 
         public string _env { get; set; }
         public string pathBase { get; set; }
@@ -321,6 +313,25 @@ namespace ManZamp.Business
         public void updatePath(string abs_main_path)
         {
             JObject jobj = ManZampLib.getJson_Env();
+
+            pathMariaDB = ManLib.ManZampLib.get_first_dir(abs_main_path, "mariadb");
+            pathApache = ManLib.ManZampLib.get_first_dir(abs_main_path, "Apache");
+            pathPHP = ManLib.ManZampLib.get_first_dir(abs_main_path, "php");
+
+            jobj[_env]["pathBase"] = abs_main_path;
+            jobj[_env]["pathMariaDB"] = pathMariaDB;
+            jobj[_env]["pathApache"] = pathApache;
+            jobj[_env]["pathPHP"] = pathPHP;
+
+            ManZampLib.setJson_Env(jobj);
+
+            change_path(abs_main_path);
+
+            pathBase = abs_main_path;
+
+
+            /*
+            JObject jobj = ManZampLib.getJson_Env();
             
             pathMariaDB = pathMariaDB.ToLower().Replace(pathBase, abs_main_path);
             pathApache = pathApache.ToLower().Replace(pathBase, abs_main_path);
@@ -336,6 +347,7 @@ namespace ManZamp.Business
             change_path(pathBase, abs_main_path);
 
             pathBase = abs_main_path;
+            */
         }
         public void get_software_version()
         {
@@ -363,9 +375,9 @@ namespace ManZamp.Business
         }
 
         #region private
-        private void change_path(string oldpath, string newpath)
+        private void change_path(string newpath)
         {
-            string[] arrfiles = { Apache_httpd_conf, PHP_ini, MariaDB_ini };
+            string[] arrfiles = { Apache_httpd_conf, PHP_ini, MariaDB_ini, Path.Combine(newpath, "scripts", "start_all.vbs") };
 
             foreach (var f in arrfiles)
             {
@@ -374,9 +386,43 @@ namespace ManZamp.Business
                     ManZampLib.printMsg_and_exit("file " + f + " not found" , true);
                     continue;
                 }
-
-
                 string text = System.IO.File.ReadAllText(f);
+                string file_name = Path.GetFileName(f);
+
+                switch(file_name)
+                {
+                    case "httpd.conf":
+                        string input = "Dot Net Not Perls";
+
+                        // Use Regex.Replace to replace the pattern in the input.
+                        // ... The pattern N.t indicates three letters.
+                        // ... N, any character, and t.
+                        text = Regex.Replace(text, @"^Define ZAMPROOT.*", "Define ZAMPROOT \"" + newpath.Replace("\\", "/") + "\"", RegexOptions.Multiline);
+                        break;
+                    case "php.ini":
+                        string name_xdebug_file = ManLib.ManZampLib.get_first_file(Path.Combine(pathPHP, "ext"), "xdebug");
+                        text = Regex.Replace(text, @"^extension_dir.*", "extension_dir = \"" + Path.Combine(pathPHP, "ext") + "\"", RegexOptions.Multiline);
+                        if(!string.IsNullOrEmpty(name_xdebug_file))
+                        {
+                            text = Regex.Replace(text, @"^zend_extension.*", "zend_extension = \"" + name_xdebug_file + "\"", RegexOptions.Multiline);
+                        }
+                        break;
+                    case "my.ini":
+                        text = Regex.Replace(text, @"^datadir.*", "datadir=" + Path.Combine(pathMariaDB, "data").Replace("\\", "/"), RegexOptions.Multiline);
+                        text = Regex.Replace(text, @"^plugin-dir=.*", "plugin-dir=" + Path.Combine(pathMariaDB, "lib", "plugin").Replace("\\", "/"), RegexOptions.Multiline);
+                        break;
+                    case "start_all.vbs":
+                        //
+                        string rep1 = "WinScriptHost.Run Chr(34) & \"" + Apache_bin + "\" & Chr(34), 0" + Environment.NewLine;
+                        string rep2 = "WinScriptHost.Run Chr(34) & \"" + MariaDB_bin + "\" & Chr(34), 0" + Environment.NewLine;
+                        //text = Regex.Replace(text, @"^WinScriptHost.Run.*", rep, RegexOptions.Multiline);
+
+                        text = Regex.Replace(text, @"^WinScriptHost.Run.*httpd.exe.*", rep1, RegexOptions.Multiline);
+                        text = Regex.Replace(text, @"^WinScriptHost.Run.*mysqld.exe.*", rep2, RegexOptions.Multiline);
+                        break;
+                }
+
+                /*
                 if (f.EndsWith("conf") || f.EndsWith("my.ini"))
                 {
                     text = ManZampLib.replace_ignorecase(text, oldpath.Replace("\\", "/"), newpath.Replace("\\", "/"));
@@ -385,6 +431,7 @@ namespace ManZamp.Business
                 {
                     text = ManZampLib.replace_ignorecase(text, oldpath.Replace("\\", "\\\\"), newpath);
                 }
+                */
                 System.IO.File.WriteAllText(f, text);
             }
         }

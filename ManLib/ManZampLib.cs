@@ -12,9 +12,9 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Reflection;
 using Newtonsoft.Json;
-using ManZamp.Business;
+using ManLib.Business;
 
-namespace ManZamp.lib
+namespace ManLib
 {
     public class ManZampLib
     {
@@ -342,7 +342,34 @@ namespace ManZamp.lib
             }
         }
 
-        
+
+        public static string get_first_dir(string abs_main_path, string search)
+        {
+            string[] arrdir = Directory.GetDirectories(Path.Combine(abs_main_path, "Apps"));
+            foreach(string s in arrdir)
+            {
+                string dir_name = Path.GetFileName(s);
+                if(s.Contains(search))
+                {
+                    return s;
+                }
+            }
+            throw new Exception(search + " folder not found");
+        }
+        public static string get_first_file(string dir, string search)
+        {
+            string[] arr = Directory.GetFiles(dir);
+            foreach (string s in arr)
+            {
+                string name = Path.GetFileName(s);
+                if (s.Contains(search))
+                {
+                    return s;
+                }
+            }
+            return "";
+        }
+
 
         #region old
         public static bool checkstatusProc_byName(string nameproc)

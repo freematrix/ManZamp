@@ -83,6 +83,26 @@ namespace ManZamp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap iconfinder_dolphin_3406442 {
+            get {
+                object obj = ResourceManager.GetObject("iconfinder_dolphin_3406442", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon iconfinder_dolphin_34064421 {
+            get {
+                object obj = ResourceManager.GetObject("iconfinder_dolphin_34064421", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap iconfinder_f_command_256_282475 {
             get {
                 object obj = ResourceManager.GetObject("iconfinder_f-command_256_282475", resourceCulture);

@@ -10,7 +10,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Collections.Specialized;
 using System.Configuration;
-using ManZamp.lib;
+using ManLib;
+using ManLib.Business;
 
 namespace ManZamp
 {

@@ -92,7 +92,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business\EnumVari.cs" />
     <Compile Include="FormBackupRestore.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,8 +116,6 @@
     <Compile Include="FormPathChange.Designer.cs">
       <DependentUpon>FormPathChange.cs</DependentUpon>
     </Compile>
-    <Compile Include="lib\ManZampLib.cs" />
-    <Compile Include="Business\ConfigVar.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormBackupRestore.resx">
@@ -190,7 +187,15 @@
     <None Include="Resources\iconfinder_f-command_256_282475.png" />
     <None Include="Resources\php_icona.png" />
     <None Include="Resources\mariadb_icona.png" />
+    <None Include="Resources\iconfinder_dolphin_3406442.png" />
+    <None Include="Resources\iconfinder_dolphin_3406442.ico" />
     <Content Include="todo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ManLib\ManLib.csproj">
+      <Project>{292e5e38-6b91-496a-9bf1-3b68f329bfbd}</Project>
+      <Name>ManLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
