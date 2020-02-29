@@ -481,7 +481,7 @@
             this.MinimumSize = new System.Drawing.Size(640, 457);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ManZAMP";
+            this.Text = "ManZAMP - beta";
             this.Load += new System.EventHandler(this.FrmManZAMP_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
