@@ -48,7 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icons8-logo-delfino-256.ico</ApplicationIcon>
+    <ApplicationIcon>iconfinder_dolphin_3406442.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>ManZamp.Program</StartupObject>
@@ -184,6 +184,7 @@
     <None Include="Resources\bullet._red.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="iconfinder_dolphin_3406442.ico" />
     <Content Include="icons8-logo-delfino-256.ico" />
     <Content Include="passaggi.txt" />
     <None Include="Resources\iconfinder_f-command_256_282475.png" />

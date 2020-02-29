@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormOptions));
             this.label1 = new System.Windows.Forms.Label();
             this.txtPathEditor = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -164,6 +165,7 @@
             this.Controls.Add(this.txtPathEditor);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(685, 155);
             this.MinimumSize = new System.Drawing.Size(685, 155);
             this.Name = "FormOptions";

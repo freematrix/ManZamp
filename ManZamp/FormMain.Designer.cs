@@ -63,23 +63,23 @@
             this.btnStartStopMariaDB = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnConsole = new System.Windows.Forms.Button();
+            this.pictureBoxMariaDB = new System.Windows.Forms.PictureBox();
+            this.pictureBoxApache = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lb_baseFolder = new System.Windows.Forms.Label();
             this.lbVersion = new System.Windows.Forms.Label();
             this.lbMariaDB_ver = new System.Windows.Forms.Label();
             this.lbPHP_ver = new System.Windows.Forms.Label();
             this.timer_refresh = new System.Windows.Forms.Timer(this.components);
-            this.pictureBoxMariaDB = new System.Windows.Forms.PictureBox();
-            this.pictureBoxApache = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMariaDB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxApache)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtOut
@@ -364,6 +364,24 @@
             this.btnConsole.UseVisualStyleBackColor = true;
             this.btnConsole.Click += new System.EventHandler(this.btnConsole_Click);
             // 
+            // pictureBoxMariaDB
+            // 
+            this.pictureBoxMariaDB.Location = new System.Drawing.Point(19, 53);
+            this.pictureBoxMariaDB.Name = "pictureBoxMariaDB";
+            this.pictureBoxMariaDB.Size = new System.Drawing.Size(23, 23);
+            this.pictureBoxMariaDB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBoxMariaDB.TabIndex = 13;
+            this.pictureBoxMariaDB.TabStop = false;
+            // 
+            // pictureBoxApache
+            // 
+            this.pictureBoxApache.Location = new System.Drawing.Point(19, 17);
+            this.pictureBoxApache.Name = "pictureBoxApache";
+            this.pictureBoxApache.Size = new System.Drawing.Size(23, 23);
+            this.pictureBoxApache.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBoxApache.TabIndex = 12;
+            this.pictureBoxApache.TabStop = false;
+            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
@@ -377,6 +395,28 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(386, 132);
             this.panel2.TabIndex = 12;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBox2.Image = global::ManZamp.Properties.Resources.mariadb_icona;
+            this.pictureBox2.Location = new System.Drawing.Point(7, 56);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(46, 29);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 5;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBox1.Image = global::ManZamp.Properties.Resources.php_icona;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 91);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(46, 29);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
             // 
             // lb_baseFolder
             // 
@@ -424,46 +464,6 @@
             this.timer_refresh.Interval = 2000;
             this.timer_refresh.Tick += new System.EventHandler(this.timer_refresh_Tick);
             // 
-            // pictureBoxMariaDB
-            // 
-            this.pictureBoxMariaDB.Location = new System.Drawing.Point(19, 53);
-            this.pictureBoxMariaDB.Name = "pictureBoxMariaDB";
-            this.pictureBoxMariaDB.Size = new System.Drawing.Size(23, 23);
-            this.pictureBoxMariaDB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBoxMariaDB.TabIndex = 13;
-            this.pictureBoxMariaDB.TabStop = false;
-            // 
-            // pictureBoxApache
-            // 
-            this.pictureBoxApache.Location = new System.Drawing.Point(19, 17);
-            this.pictureBoxApache.Name = "pictureBoxApache";
-            this.pictureBoxApache.Size = new System.Drawing.Size(23, 23);
-            this.pictureBoxApache.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBoxApache.TabIndex = 12;
-            this.pictureBoxApache.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pictureBox1.Image = global::ManZamp.Properties.Resources.php_icona;
-            this.pictureBox1.Location = new System.Drawing.Point(3, 91);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(46, 29);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pictureBox2.Image = global::ManZamp.Properties.Resources.mariadb_icona;
-            this.pictureBox2.Location = new System.Drawing.Point(7, 56);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(46, 29);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 5;
-            this.pictureBox2.TabStop = false;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -487,12 +487,12 @@
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMariaDB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxApache)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
