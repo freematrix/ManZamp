@@ -50,11 +50,11 @@ namespace ManLib
             }
         }
 
-        public static List<string> getAllDB()
+        public static List<string> getAllDB(string port)
         {
             List<string> tempList = new List<string>();
 
-            var connString = "Server=127.0.0.1;User ID=root;Password=root;Database=mysql;port=3309";
+            var connString = "Server=127.0.0.1;User ID=root;Password=root;Database=mysql;port=" + port;
 
             using (var conn = new MySqlConnection(connString))
             {

@@ -35,7 +35,7 @@ namespace ManZamp
         {
             try
             {
-                all_db = ManZampLib.getAllDB();
+                all_db = ManZampLib.getAllDB(cv.mariadb_port);
                 foreach(string s in all_db)
                 {
                     comboBoxDbRestore.Items.Add(s);
@@ -128,7 +128,7 @@ namespace ManZamp
 
                 //eseguiRestore(comboBoxDbRestore.SelectedItem.ToString(), txtPathSQLFile.Text);
                 ManZampLib.ExecuteBatchFile(System.IO.Path.Combine(cv.pathBase, "scripts", "MySql_Restore.bat"), 
-                    new string[] { "root", "root", comboBoxDbRestore.SelectedItem.ToString(), txtPathSQLFile.Text, "127.0.0.1", System.IO.Path.Combine(cv.pathMariaDB, "bin"), "3309" }
+                    new string[] { "root", "root", comboBoxDbRestore.SelectedItem.ToString(), txtPathSQLFile.Text, "127.0.0.1", System.IO.Path.Combine(cv.pathMariaDB, "bin"), cv.mariadb_port }
                 );
                 MessageBox.Show("Restore " + str_db + " with file " + nomebackup_file + " completed");
                 //this.Close();
