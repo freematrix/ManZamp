@@ -353,6 +353,58 @@ Questo  è un esempio di virtualhost con delle virtual directory
 
 ***********************************************************************************************************
 
+   _____ _____ _      
+  / ____/ ____| |     
+ | (___| (___ | |     
+  \___ \\___ \| |     
+  ____) |___) | |____ 
+ |_____/_____/|______|
+                      
+
+copiare il file httpd-ssl.conf e dare il nome httpd-ssl-new.conf
+editare il file httpd-ssl-new.conf portando le seguenti modifiche
+
+	SSLCertificateFile "${SRVROOT}/conf/cert/apache-selfsigned.crt"
+	SSLCertificateKeyFile "${SRVROOT}/conf/cert/apache-selfsigned.key"
+
+
+Nel file httpd.conf sotto alla linea 
+	#Include conf/extra/httpd-ssl.conf
+aggiungere 
+	Include conf/extra/httpd-ssl-new.conf
+
+
+assicurarsi che sia scommentata le linee
+	LoadModule ssl_module modules/mod_ssl.so
+	LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
+
+
+creare il relativo virtualhost per il sito
+
+	<VirtualHost *:${HTTPS_PORT}>
+		ServerAdmin info@localtestsslsite.com
+		DocumentRoot "${SITEROOT}/www.localtestsslsite.com"
+		ServerName localtestsslsite.com
+		ServerAlias www.localtestsslsite.com
+	
+		<directory "${SITEROOT}/www.localtestsslsite.com" >
+			DirectoryIndex index.php index.html
+			Options FollowSymLinks
+			AllowOverride All
+			Require all granted
+		</directory>
+ 
+		ErrorLog "${ZAMPROOT}/logs/localtestsslsite_error.log"
+		CustomLog "${ZAMPROOT}/logs/localtestsslsite_access.log" common
+ 
+		SSLEngine on
+		SSLCertificateFile     "${SRVROOT}/conf/cert/apache-selfsigned.crt"
+		SSLCertificateKeyFile  "${SRVROOT}/conf/cert/apache-selfsigned.key"
+	</VirtualHost>
+
+
+creare la entry nel file host e testare
+
 
 
 

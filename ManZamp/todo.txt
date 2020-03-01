@@ -1,6 +1,4 @@
-- installazione certificato ssl e setting porta 443
 - creare installer
-- recuperare info sulla versione di php e mariadb
 - trovare metodo alternativo per gestire il fatto che un processo è stato terminato esternamente (senza timer)
 
 non sono iriuscito a fare
