@@ -1,6 +1,6 @@
 # ManZamp
 
-ManZamp is the gui for the project [ManZamp](https://sourceforge.net/projects/manzamp/) - full portable wamp stack
+ManZamp is the gui form application for the project [ManZamp](https://sourceforge.net/projects/manzamp/) - full portable wamp stack
 
 ## Getting Started
 
