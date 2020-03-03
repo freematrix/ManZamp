@@ -189,6 +189,9 @@
     <None Include="Resources\mariadb_icona.png" />
     <None Include="Resources\iconfinder_dolphin_3406442.png" />
     <None Include="Resources\iconfinder_dolphin_3406442.ico" />
+    <None Include="Resources\Image1.bmp" />
+    <None Include="Resources\iconfinder_info_370079.png" />
+    <None Include="Resources\noun_terminal_6140AAAAAAAAA40.png" />
     <Content Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>

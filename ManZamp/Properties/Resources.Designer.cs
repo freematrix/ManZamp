@@ -113,9 +113,29 @@ namespace ManZamp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap iconfinder_info_370079 {
+            get {
+                object obj = ResourceManager.GetObject("iconfinder_info_370079", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap mariadb_icona {
             get {
                 object obj = ResourceManager.GetObject("mariadb_icona", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap noun_terminal_6140AAAAAAAAA40 {
+            get {
+                object obj = ResourceManager.GetObject("noun_terminal_6140AAAAAAAAA40", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
