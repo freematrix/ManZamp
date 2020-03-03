@@ -1,6 +1,5 @@
 - creare installer
 - trovare metodo alternativo per gestire il fatto che un processo è stato terminato esternamente (senza timer)
-- prima di lanciare le applicazioni controllare le porte se sono in uso
 
 
 non sono iriuscito a fare

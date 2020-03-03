@@ -13,6 +13,8 @@ using System.IO;
 using System.Reflection;
 using Newtonsoft.Json;
 using ManLib.Business;
+using System.Net.NetworkInformation;
+using System.Net;
 
 namespace ManLib
 {
@@ -77,6 +79,28 @@ namespace ManLib
             }
 
             return tempList;
+        }
+
+        public static bool port_in_use(string _port)
+        {
+            int port = Convert.ToInt32(_port);
+            bool inUse = false;
+
+            IPGlobalProperties ipProperties = IPGlobalProperties.GetIPGlobalProperties();
+            IPEndPoint[] ipEndPoints = ipProperties.GetActiveTcpListeners();
+
+
+            foreach (IPEndPoint endPoint in ipEndPoints)
+            {
+                if (endPoint.Port == port)
+                {
+                    inUse = true;
+                    break;
+                }
+            }
+
+
+            return inUse;
         }
 
         public static string startProc(ConfigVar cv, typeProg tpg, string[] args)

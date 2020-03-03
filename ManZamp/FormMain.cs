@@ -54,9 +54,29 @@ namespace ManZamp
                     ManZampLib.printMsg_and_exit(svalidate);
                 }
 
+                string msg_port_in_use = "";
+                if(ManZampLib.port_in_use(cv.apache_http_port))
+                {
+                    msg_port_in_use += "http port \"" + cv.apache_http_port + "\" in use" + Environment.NewLine;
+                }
+                if (ManZampLib.port_in_use(cv.apache_https_port))
+                {
+                    msg_port_in_use += "https port \"" + cv.apache_https_port + "\" in use" + Environment.NewLine;
+                }
+                if (ManZampLib.port_in_use(cv.mariadb_port))
+                {
+                    msg_port_in_use += "MariaDB port \"" + cv.mariadb_port + "\" in use" + Environment.NewLine;
+                }
+                if(!string.IsNullOrEmpty(msg_port_in_use))
+                {
+                    addOutput(msg_port_in_use);
+                    MessageBox.Show(msg_port_in_use, "!!!!!", MessageBoxButtons.OK);
+                }
+
+
                 //base dir not exist
                 //rebase directories
-                if(!System.IO.Directory.Exists(cv.pathBase))
+                if (!System.IO.Directory.Exists(cv.pathBase))
                 {
                     FormPathChange frm2 = new FormPathChange();
                     DialogResult dr = frm2.ShowDialog(this);
