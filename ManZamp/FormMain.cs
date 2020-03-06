@@ -78,13 +78,14 @@ namespace ManZamp
                 //rebase directories
                 if (!System.IO.Directory.Exists(cv.pathBase))
                 {
-                    FormPathChange frm2 = new FormPathChange();
-                    DialogResult dr = frm2.ShowDialog(this);
-                    if (dr == DialogResult.OK)
-                    {
-                        cv.updatePath(frm2.abs_main_path);
-                    }
-                    frm2.Close();
+                    //FormPathChange frm2 = new FormPathChange();
+                    //DialogResult dr = frm2.ShowDialog(this);
+                    //if (dr == DialogResult.OK)
+                    //{
+                    //    cv.updatePath(frm2.abs_main_path);
+                    //}
+                    //frm2.Close();
+                    ManZampLib.printMsg_and_exit("Base folder changed - please run \"setup.vbs\"");
                 }
 
                 cv.get_software_version();
