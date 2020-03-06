@@ -134,14 +134,16 @@ namespace ManZamp
         private void changeBaseFolderToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             //FormPathChange
-            FormPathChange frm2 = new FormPathChange();
-            DialogResult dr = frm2.ShowDialog(this);
-            if (dr == DialogResult.OK)
-            {
-                cv.updatePath(frm2.abs_main_path);
+            ManZampLib.printMsg_and_exit("Move your zamp folder and then run \"setup.vbs\"");
 
-            }
-            frm2.Close();
+            //FormPathChange frm2 = new FormPathChange();
+            //DialogResult dr = frm2.ShowDialog(this);
+            //if (dr == DialogResult.OK)
+            //{
+            //    cv.updatePath(frm2.abs_main_path);
+
+            //}
+            //frm2.Close();
         }
         private void changeConfig_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
