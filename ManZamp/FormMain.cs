@@ -48,6 +48,22 @@ namespace ManZamp
             try
             {
                 cv = new ConfigVar();
+
+                //base dir not exist
+                //rebase directories
+                if (!System.IO.Directory.Exists(cv.pathBase))
+                {
+                    //FormPathChange frm2 = new FormPathChange();
+                    //DialogResult dr = frm2.ShowDialog(this);
+                    //if (dr == DialogResult.OK)
+                    //{
+                    //    cv.updatePath(frm2.abs_main_path);
+                    //}
+                    //frm2.Close();
+                    ManZampLib.printMsg_and_exit("Base folder changed - please run \"setup.vbs\"", true, this);
+                }
+
+
                 string svalidate = cv.validateSetting();
                 if(!string.IsNullOrEmpty(svalidate))
                 {
@@ -73,19 +89,6 @@ namespace ManZamp
                     MessageBox.Show(msg_port_in_use, "!!!!!", MessageBoxButtons.OK);
                 }
 
-
-                //base dir not exist
-                //rebase directories
-                if (!System.IO.Directory.Exists(cv.pathBase))
-                {
-                    FormPathChange frm2 = new FormPathChange();
-                    DialogResult dr = frm2.ShowDialog(this);
-                    if (dr == DialogResult.OK)
-                    {
-                        cv.updatePath(frm2.abs_main_path);
-                    }
-                    frm2.Close();
-                }
 
                 cv.get_software_version();
                 refreshStatusForm();
@@ -131,6 +134,7 @@ namespace ManZamp
         private void changeBaseFolderToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             //FormPathChange
+<<<<<<< HEAD
 
             MessageBox.Show("To change the folder move your zamp folder an then re-run setup.vbs in the root folder");
             /*
@@ -143,6 +147,18 @@ namespace ManZamp
             }
             frm2.Close();
             */
+=======
+            ManZampLib.printMsg_and_exit("Move your zamp folder and then run \"setup.vbs\"");
+
+            //FormPathChange frm2 = new FormPathChange();
+            //DialogResult dr = frm2.ShowDialog(this);
+            //if (dr == DialogResult.OK)
+            //{
+            //    cv.updatePath(frm2.abs_main_path);
+
+            //}
+            //frm2.Close();
+>>>>>>> 760625b58a2063c79b372bc85bb0d77a0eb42bce
         }
         private void changeConfig_ToolStripMenuItem_Click(object sender, EventArgs e)
         {

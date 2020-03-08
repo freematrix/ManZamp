@@ -39,7 +39,7 @@ namespace ManLib
             //return "";
         }
 
-        public static void printMsg_and_exit(string msg = "", bool bexit = false)
+        public static void printMsg_and_exit(string msg = "", bool bexit = false, System.Windows.Forms.Form f = null)
         {
             if(!string.IsNullOrEmpty(msg))
             {
@@ -48,6 +48,10 @@ namespace ManLib
 
             if(bexit)
             {
+                if(f != null)
+                {
+                    f.Close();
+                }
                 System.Windows.Forms.Application.Exit();
             }
         }
