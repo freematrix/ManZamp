@@ -131,6 +131,9 @@ namespace ManZamp
         private void changeBaseFolderToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             //FormPathChange
+
+            MessageBox.Show("To change the folder move your zamp folder an then re-run setup.vbs in the root folder");
+            /*
             FormPathChange frm2 = new FormPathChange();
             DialogResult dr = frm2.ShowDialog(this);
             if (dr == DialogResult.OK)
@@ -139,6 +142,7 @@ namespace ManZamp
 
             }
             frm2.Close();
+            */
         }
         private void changeConfig_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
