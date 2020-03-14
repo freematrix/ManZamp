@@ -47,6 +47,10 @@ namespace ManZamp
         {
             try
             {
+                this.Text += " - (User: " + ManLib.ManZampLib.getNameCurrent_user() + ")";
+
+
+
                 cv = new ConfigVar();
 
                 //base dir not exist
@@ -133,32 +137,7 @@ namespace ManZamp
         }
         private void changeBaseFolderToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            //FormPathChange
-<<<<<<< HEAD
-
-            MessageBox.Show("To change the folder move your zamp folder an then re-run setup.vbs in the root folder");
-            /*
-            FormPathChange frm2 = new FormPathChange();
-            DialogResult dr = frm2.ShowDialog(this);
-            if (dr == DialogResult.OK)
-            {
-                cv.updatePath(frm2.abs_main_path);
-
-            }
-            frm2.Close();
-            */
-=======
-            ManZampLib.printMsg_and_exit("Move your zamp folder and then run \"setup.vbs\"");
-
-            //FormPathChange frm2 = new FormPathChange();
-            //DialogResult dr = frm2.ShowDialog(this);
-            //if (dr == DialogResult.OK)
-            //{
-            //    cv.updatePath(frm2.abs_main_path);
-
-            //}
-            //frm2.Close();
->>>>>>> 760625b58a2063c79b372bc85bb0d77a0eb42bce
+            MessageBox.Show("To change base folder move your zamp folder an then re-run setup.vbs in the root folder");
         }
         private void changeConfig_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -245,9 +224,10 @@ namespace ManZamp
         {
             string apache_dir_bin = System.IO.Path.Combine(cv.pathApache, "bin");
             string mariadb_dir_bin = System.IO.Path.Combine(cv.pathMariaDB, "bin");
+            string composer_path = System.IO.Path.Combine(cv.pathBase, "Apps", "composer");
 
-            ManZampLib.ExecuteBatchFile(System.IO.Path.Combine(cv.pathBase, "scripts", "open_console.bat"),
-                    new string[] { apache_dir_bin, cv.pathPHP, mariadb_dir_bin }
+            ManZampLib.ExecuteBatchFile_dont_wait(System.IO.Path.Combine(cv.pathBase, "scripts", "open_console.bat"),
+                    new string[] { apache_dir_bin, cv.pathPHP, mariadb_dir_bin, composer_path }
             );
         }
         private void phpinfoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -258,7 +238,6 @@ namespace ManZamp
                 System.Diagnostics.Process.Start(_url);
             }
         }
-
         private void phpMyAdminToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string _url = cv.url_phpmyadmin;
@@ -267,7 +246,6 @@ namespace ManZamp
                 System.Diagnostics.Process.Start(_url);
             }
         }
-
         private void adminerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string _url = cv.url_adminer;
@@ -276,11 +254,30 @@ namespace ManZamp
                 System.Diagnostics.Process.Start(_url);
             }
         }
+        private void showHostEntryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string path_host_file = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), @"drivers\etc\hosts");
+                string contents = System.IO.File.ReadAllText(path_host_file);
+
+                FormMsg frm_msg = new FormMsg(contents);
+                frm_msg.ShowDialog(this);
+                frm_msg.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void hostFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string path_host_file = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), @"drivers\etc\hosts");
+            ManZampLib.startProc_as_admin(cv.default_editor_path, path_host_file);
+        }
         #endregion
 
         #region private method
-
-
         private void refreshStatusForm()
         {
             lbVersion.Text = "Ambiente: " + cv._env;
@@ -374,8 +371,7 @@ namespace ManZamp
                 }
             }
         }
-
-
         #endregion
+
     }
 }

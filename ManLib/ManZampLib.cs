@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using ManLib.Business;
 using System.Net.NetworkInformation;
 using System.Net;
+using System.Security.Principal;
 
 namespace ManLib
 {
@@ -176,14 +177,14 @@ namespace ManLib
             return sout;
         }
 
-        public static string startProc_and_wait_output(string path_exe, string args)
+        public static string startProc_and_wait_output(string path_exe, string args, bool bhide = false)
         {
             string _outstring = "";
             Process process = new Process();
             process.StartInfo.FileName = "cmd.exe";
             process.StartInfo.Arguments = "/c \"" + path_exe + " " + args + "\"";
             process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = false;
+            process.StartInfo.CreateNoWindow = bhide;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardError = true;
             process.Start();
@@ -195,6 +196,32 @@ namespace ManLib
             process.WaitForExit();
             return _outstring;
         }
+
+        public static void startProc_as_admin(string path_exe, string args)
+        {
+            ProcessStartInfo proc = new ProcessStartInfo();
+            proc.UseShellExecute = true;
+            proc.WorkingDirectory = Environment.CurrentDirectory;
+            //proc.FileName = path_exe;
+            proc.FileName = "notepad.exe"; // qui devo per forza usare notepad perchè notepad++ o altro potrebbe non funzionare
+            proc.Verb = "runas";
+            proc.Arguments = args;
+
+            try
+            {
+                Process.Start(proc);
+            }
+            catch(Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.ToString());
+                // The user refused the elevation.
+                // Do nothing and return directly ...
+                return;
+            }
+            //System.Windows.Forms.Application.Exit();  // Quit itself
+        }
+
+
 
         public static bool checkRunningProc(string pid)
         {
@@ -314,7 +341,47 @@ namespace ManLib
         /// <param name="batchFileName"&RT;Name of the batch file that should be run</param&RT;
         /// <param name="argumentsToBatchFile"&RT;Arguments to the batch file</param&RT;
         /// <returns&RT;Status of running the batch file</returns&RT;
-        public static bool ExecuteBatchFile(string batchFileName, string[] argumentsToBatchFile)
+
+
+        public static List<string> ExecuteBatchFile(string batchFileName, string[] argumentsToBatchFile)
+        {
+            string argumentsString = string.Empty;
+            List<string> l_res = new List<string>();
+
+            if (argumentsToBatchFile != null)
+            {
+                for (int count = 0; count < argumentsToBatchFile.Length; count++)
+                {
+                    argumentsString += " \"" + argumentsToBatchFile[count] + "\"";
+                }
+            }
+
+
+            ProcessStartInfo ProcessInfo = new ProcessStartInfo(batchFileName, argumentsString);
+            ProcessInfo.CreateNoWindow = true;
+            ProcessInfo.UseShellExecute = false;
+            //ProcessInfo.WorkingDirectory = Application.StartupPath + "\\txtmanipulator";
+            // *** Redirect the output ***
+            ProcessInfo.RedirectStandardError = true;
+            ProcessInfo.RedirectStandardOutput = true;
+
+            Process process = Process.Start(ProcessInfo);
+            process.WaitForExit();
+
+            // *** Read the streams ***
+            string output = process.StandardOutput.ReadToEnd();
+            string error = process.StandardError.ReadToEnd();
+
+            int ExitCode = process.ExitCode;
+
+            process.Close();
+
+            l_res.Add(output);
+            l_res.Add(error);
+            l_res.Add(ExitCode.ToString());
+            return l_res;
+        }
+        public static bool ExecuteBatchFile_dont_wait(string batchFileName, string[] argumentsToBatchFile)
         {
             string argumentsString = string.Empty;
             try
@@ -324,41 +391,19 @@ namespace ManLib
                 {
                     for (int count = 0; count < argumentsToBatchFile.Length; count++)
                     {
-                        argumentsString += " ";
-                        argumentsString += argumentsToBatchFile[count];
-                        //argumentsString += "\"";
+                        argumentsString += " \"" + argumentsToBatchFile[count] + "\"";
                     }
                 }
 
+
                 //Create process start information
-                System.Diagnostics.ProcessStartInfo DBProcessStartInfo = new System.Diagnostics.ProcessStartInfo(batchFileName, argumentsString);
-
-                //Redirect the output to standard window
-                DBProcessStartInfo.RedirectStandardOutput = true;
-
-                //The output display window need not be falshed onto the front.
-                DBProcessStartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                ProcessStartInfo DBProcessStartInfo = new ProcessStartInfo(batchFileName, argumentsString);
                 DBProcessStartInfo.UseShellExecute = false;
+                DBProcessStartInfo.RedirectStandardOutput = false;
+                DBProcessStartInfo.RedirectStandardError = false;
 
-                //Create the process and run it
-                System.Diagnostics.Process dbProcess;
-                dbProcess = System.Diagnostics.Process.Start(DBProcessStartInfo);
 
-                //Catch the output text from the console so that if error happens, the output text can be logged.
-                System.IO.StreamReader standardOutput = dbProcess.StandardOutput;
-
-                /* Wait as long as the DB Backup or Restore or Repair is going on. 
-                Ping once in every 2 seconds to check whether process is completed. */
-                while (!dbProcess.HasExited)
-                    dbProcess.WaitForExit(2000);
-
-                if (dbProcess.HasExited)
-                {
-                    string consoleOutputText = standardOutput.ReadToEnd();
-                    //TODO - log consoleOutputText to the log file.
-
-                }
-
+                Process dbProcess = Process.Start(DBProcessStartInfo);
                 return true;
             }
             // Catch the SQL exception and throw the customized exception made out of that
@@ -396,6 +441,15 @@ namespace ManLib
                 }
             }
             return "";
+        }
+
+
+        public static string getNameCurrent_user()
+        {
+            WindowsIdentity id = WindowsIdentity.GetCurrent();
+            return id.Name;
+            //WindowsPrincipal principal = new WindowsPrincipal(id);
+            //return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
 
@@ -449,6 +503,61 @@ namespace ManLib
                 sout += nameproc + " not running" + Environment.NewLine;
             }
             return sout;
+        }
+        public static bool ExecuteBatchFile_OLD(string batchFileName, string[] argumentsToBatchFile)
+        {
+            string argumentsString = string.Empty;
+            try
+            {
+                //Add up all arguments as string with space separator between the arguments
+                if (argumentsToBatchFile != null)
+                {
+                    for (int count = 0; count < argumentsToBatchFile.Length; count++)
+                    {
+                        argumentsString += " ";
+                        argumentsString += argumentsToBatchFile[count];
+                        //argumentsString += "\"";
+                    }
+                }
+
+                //Create process start information
+                System.Diagnostics.ProcessStartInfo DBProcessStartInfo = new System.Diagnostics.ProcessStartInfo(batchFileName, argumentsString);
+
+                //Redirect the output to standard window
+                DBProcessStartInfo.RedirectStandardOutput = true;
+
+                //The output display window need not be falshed onto the front.
+                DBProcessStartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                DBProcessStartInfo.UseShellExecute = false;
+
+                //Create the process and run it
+                System.Diagnostics.Process dbProcess;
+                dbProcess = System.Diagnostics.Process.Start(DBProcessStartInfo);
+
+                //Catch the output text from the console so that if error happens, the output text can be logged.
+                System.IO.StreamReader standardOutput = dbProcess.StandardOutput;
+
+                /* Wait as long as the DB Backup or Restore or Repair is going on. 
+                Ping once in every 2 seconds to check whether process is completed. */
+                while (!dbProcess.HasExited)
+                    dbProcess.WaitForExit(2000);
+
+                if (dbProcess.HasExited)
+                {
+                    string consoleOutputText = standardOutput.ReadToEnd();
+                    //TODO - log consoleOutputText to the log file.
+
+                }
+
+                return true;
+            }
+            // Catch the SQL exception and throw the customized exception made out of that
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+                //throw new CustomizedException(ARCExceptionManager.ErrorCodeConstants.generalError, ex.Message);
+                return false;
+            }
         }
         #endregion
     }

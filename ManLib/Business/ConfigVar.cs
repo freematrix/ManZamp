@@ -355,7 +355,7 @@ namespace ManLib.Business
             Match match;
 
 
-            php_vers = ManZampLib.startProc_and_wait_output(PHP_bin, "-v");
+            php_vers = ManZampLib.startProc_and_wait_output(PHP_bin, "-v", true);
             regex = new Regex(@"PHP \d\.\d.\d");
             match = regex.Match(php_vers);
             if (match.Success)
@@ -363,7 +363,7 @@ namespace ManLib.Business
                 php_vers = "PHP Vers: " + match.Value;
             }
 
-            mariadb_vers = ManZampLib.startProc_and_wait_output(MariaDB_bin, "--version");
+            mariadb_vers = ManZampLib.startProc_and_wait_output(MariaDB_bin, "--version", true);
             regex = new Regex(@"Ver \d+\.\d+\.\d+");
             match = regex.Match(mariadb_vers);
             if (match.Success)

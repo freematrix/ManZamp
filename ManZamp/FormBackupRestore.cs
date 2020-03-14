@@ -77,10 +77,17 @@ namespace ManZamp
                 nomebackup_file = System.IO.Path.Combine(cv.pathBase, "db_backup", nomebackup_file);
 
                 //eseguibackup(str_db, nomebackup_file);
-                ManZampLib.ExecuteBatchFile(System.IO.Path.Combine(cv.pathBase, "scripts", "MySql_Backup.bat"),
+                List<string> l_res = ManZampLib.ExecuteBatchFile(System.IO.Path.Combine(cv.pathBase, "scripts", "MySql_Backup.bat"),
                     new string[] { str_db, "root", "root", nomebackup_file, System.IO.Path.Combine(cv.pathMariaDB, "bin"), "127.0.0.1", cv.mariadb_port }
                 );
-                MessageBox.Show("Backup done at file: " + nomebackup_file);
+
+                string contents = l_res[0] + Environment.NewLine + Environment.NewLine + "Error: " + l_res[1] + Environment.NewLine + "Exit code: " + l_res[2] + Environment.NewLine + "Backup done : " + nomebackup_file;
+                
+                FormMsg frm_msg = new FormMsg(contents);
+                frm_msg.ShowDialog(this);
+                frm_msg.Dispose();
+
+                //MessageBox.Show("Backup done at file: " + nomebackup_file);
                 //this.Close();
             }
         }
@@ -123,15 +130,19 @@ namespace ManZamp
             else
             {
                 string str_db = comboBoxDbRestore.SelectedItem.ToString();
-                string nomebackup_file = str_db + "_" + DateTime.Now.Year + "_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_-_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + "_" + DateTime.Now.Millisecond + ".sql";
-                nomebackup_file = System.IO.Path.Combine(cv.pathBase, "backup_db", nomebackup_file);
 
                 //eseguiRestore(comboBoxDbRestore.SelectedItem.ToString(), txtPathSQLFile.Text);
-                ManZampLib.ExecuteBatchFile(System.IO.Path.Combine(cv.pathBase, "scripts", "MySql_Restore.bat"), 
+                List<string> l_res= ManZampLib.ExecuteBatchFile(System.IO.Path.Combine(cv.pathBase, "scripts", "MySql_Restore.bat"), 
                     new string[] { "root", "root", comboBoxDbRestore.SelectedItem.ToString(), txtPathSQLFile.Text, "127.0.0.1", System.IO.Path.Combine(cv.pathMariaDB, "bin"), cv.mariadb_port }
                 );
-                MessageBox.Show("Restore " + str_db + " with file " + nomebackup_file + " completed");
-                //this.Close();
+
+                string contents = l_res[0] + Environment.NewLine + Environment.NewLine + "Error: " + l_res[1] + Environment.NewLine + "Exit code: " + l_res[2] + Environment.NewLine + "Restored " + str_db + " with file " + txtPathSQLFile.Text;
+
+                FormMsg frm_msg = new FormMsg(contents);
+                frm_msg.ShowDialog(this);
+                frm_msg.Dispose();
+
+                //MessageBox.Show("Restored " + str_db + " with file " + nomebackup_file + " completed");
 
             }
         }
