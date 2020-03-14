@@ -392,8 +392,6 @@ namespace ManLib.Business
                 switch(file_name)
                 {
                     case "httpd.conf":
-                        string input = "Dot Net Not Perls";
-
                         // Use Regex.Replace to replace the pattern in the input.
                         // ... The pattern N.t indicates three letters.
                         // ... N, any character, and t.

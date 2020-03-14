@@ -275,6 +275,24 @@ namespace ManZamp
             string path_host_file = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), @"drivers\etc\hosts");
             ManZampLib.startProc_as_admin(cv.default_editor_path, path_host_file);
         }
+        private void wordpressToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!ManZampLib.checkRunningProc(cv.getPID_mariadb))
+            {
+                MessageBox.Show("MariaDB is not running");
+                return;
+            }
+
+            FormOneClick_WP frm_wp = new FormOneClick_WP(cv);
+            if (frm_wp.ShowDialog(this) == DialogResult.OK)
+            {
+                //cv = frm2.cv;
+                //cv.updatePort();
+                //cv.updateDefaultEditor(cv.default_editor_path);
+            }
+
+            frm_wp.Dispose();
+        }
         #endregion
 
         #region private method
@@ -373,5 +391,6 @@ namespace ManZamp
         }
         #endregion
 
+        
     }
 }

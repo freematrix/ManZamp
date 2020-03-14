@@ -24,10 +24,22 @@
     "pid_currentproc_mariadb": ""
   },
   "cameretta": {
-    "pathBase":     "F:\\SVL\\zamp\\zamp_latest",
-    "pathMariaDB":  "F:\\SVL\\zamp\\zamp_latest\\Apps\\mariadb-10.4.12",
-    "pathApache":   "F:\\SVL\\zamp\\zamp_latest\\Apps\\Apache24",
-    "pathPHP":      "F:\\SVL\\zamp\\zamp_latest\\Apps\\php-7.4.3",
+    "pathBase": "F:\\SVL\\zamp\\zamp_latest",
+    "pathMariaDB": "F:\\SVL\\zamp\\zamp_latest\\Apps\\mariadb-10.4.12",
+    "pathApache": "F:\\SVL\\zamp\\zamp_latest\\Apps\\Apache24",
+    "pathPHP": "F:\\SVL\\zamp\\zamp_latest\\Apps\\php-7.4.3",
+    "default_editor_path": "C:\\Program Files (x86)\\Notepad++\\notepad++.exe",
+    "apache_http_port": "80",
+    "apache_https_port": "443",
+    "mariadb_port": "3306",
+    "pid_currentproc_apache": "",
+    "pid_currentproc_mariadb": ""
+  },
+  "casa_80": {
+    "pathBase": "F:\\SVL\\zamp\\zamp_casa_80",
+    "pathMariaDB": "F:\\SVL\\zamp\\zamp_casa_80\\Apps\\mariadb-10.4.12",
+    "pathApache": "F:\\SVL\\zamp\\zamp_casa_80\\Apps\\Apache24",
+    "pathPHP": "F:\\SVL\\zamp\\zamp_casa_80\\Apps\\php-7.4.3",
     "default_editor_path": "C:\\Program Files (x86)\\Notepad++\\notepad++.exe",
     "apache_http_port": "80",
     "apache_https_port": "443",

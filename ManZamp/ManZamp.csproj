@@ -66,6 +66,8 @@
     </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.0\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
@@ -110,6 +112,12 @@
     <Compile Include="FormMsg.Designer.cs">
       <DependentUpon>FormMsg.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormOneClick_WP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormOneClick_WP.Designer.cs">
+      <DependentUpon>FormOneClick_WP.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormOptions.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMsg.resx">
       <DependentUpon>FormMsg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormOneClick_WP.resx">
+      <DependentUpon>FormOneClick_WP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormOptions.resx">
       <DependentUpon>FormOptions.cs</DependentUpon>
