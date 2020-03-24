@@ -86,7 +86,7 @@ namespace ManLib
             return tempList;
         }
 
-        public static bool port_in_use(string _port)
+        public static bool port_in_use(string _port, string _procid)
         {
             int port = Convert.ToInt32(_port);
             bool inUse = false;
@@ -99,11 +99,15 @@ namespace ManLib
             {
                 if (endPoint.Port == port)
                 {
+                    int proc_id = getProcessId_from_port(port);
+                    if(proc_id.ToString() == _procid)
+                    {
+                        continue;
+                    }
                     inUse = true;
                     break;
                 }
             }
-
 
             return inUse;
         }
@@ -222,6 +226,91 @@ namespace ManLib
         }
 
 
+        public static int getProcessId_from_port(int _port)
+        {
+            using (Process Proc = new Process())
+            {
+                ProcessStartInfo StartInfo = new ProcessStartInfo();
+                StartInfo.FileName = "netstat.exe";
+                StartInfo.Arguments = "-a -n -o";
+                StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                StartInfo.UseShellExecute = false;
+                StartInfo.RedirectStandardInput = true;
+                StartInfo.RedirectStandardOutput = true;
+                StartInfo.RedirectStandardError = true;
+
+                Proc.StartInfo = StartInfo;
+                Proc.Start();
+
+                StreamReader StandardOutput = Proc.StandardOutput;
+                StreamReader StandardError = Proc.StandardError;
+
+                string NetStatContent = StandardOutput.ReadToEnd() + StandardError.ReadToEnd();
+                string NetStatExitStatus = Proc.ExitCode.ToString();
+
+                if (NetStatExitStatus != "0")
+                {
+                    Console.WriteLine("NetStat command failed.   This may require elevated permissions.");
+                }
+
+                string[] NetStatRows = Regex.Split(NetStatContent, "\r\n");
+
+                foreach (string NetStatRow in NetStatRows)
+                {
+                    string[] Tokens = Regex.Split(NetStatRow, "\\s+");
+                    if (Tokens.Length > 4 && (Tokens[1].Equals("UDP") || Tokens[1].Equals("TCP")))
+                    {
+                        string IpAddress = Regex.Replace(Tokens[2], @"\[(.*?)\]", "1.1.1.1");
+                        try
+                        {
+                            int port = Convert.ToInt32(IpAddress.Split(':')[1]);
+                            string processname = Tokens[1] == "UDP" ? GetProcessName(Convert.ToInt16(Tokens[4])) : GetProcessName(Convert.ToInt16(Tokens[5]));
+                            int ProcessId = Tokens[1] == "UDP" ? Convert.ToInt16(Tokens[4]) : Convert.ToInt16(Tokens[5]);
+                            string Protocol = IpAddress.Contains("1.1.1.1") ? String.Format("{0}v6", Tokens[1]) : String.Format("{0}v4", Tokens[1]);
+                            if(_port == port)
+                            {
+                                return ProcessId;
+                            }
+                            /*
+                            ProcessPorts.Add(new ProcessPort(
+                                Tokens[1] == "UDP" ? GetProcessName(Convert.ToInt16(Tokens[4])) : GetProcessName(Convert.ToInt16(Tokens[5])),
+                                Tokens[1] == "UDP" ? Convert.ToInt16(Tokens[4]) : Convert.ToInt16(Tokens[5]),
+                                IpAddress.Contains("1.1.1.1") ? String.Format("{0}v6", Tokens[1]) : String.Format("{0}v4", Tokens[1]),
+                                Convert.ToInt32(IpAddress.Split(':')[1])
+                            ));*/
+                        }
+                        catch
+                        {
+                            //Console.WriteLine("Could not convert the following NetStat row to a Process to Port mapping.");
+                            //Console.WriteLine(NetStatRow);
+                        }
+                    }
+                    else
+                    {
+                        if (!NetStatRow.Trim().StartsWith("Proto") && !NetStatRow.Trim().StartsWith("Active") && !String.IsNullOrWhiteSpace(NetStatRow))
+                        {
+                            //Console.WriteLine("Unrecognized NetStat row to a Process to Port mapping.");
+                            //Console.WriteLine(NetStatRow);
+                        }
+                    }
+                }
+            }
+
+            return 0;
+        }
+
+        private static string GetProcessName(int ProcessId)
+        {
+            string procName = "UNKNOWN";
+
+            try
+            {
+                procName = Process.GetProcessById(ProcessId).ProcessName;
+            }
+            catch { }
+
+            return procName;
+        }
 
         public static bool checkRunningProc(string pid)
         {
