@@ -452,6 +452,38 @@ namespace ManLib
             //return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
+        public static List<string> getListSite(ConfigVar cv)
+        {
+            List<string> _list = new List<string>();
+            string arrtest = ManZampLib.startProc_and_wait_output(cv.Apache_bin, "-S", true);
+            string pattern = @"\d*\snamevhost\s(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?";
+            Regex rgx = new Regex(pattern);
+            string sentence = arrtest;
+
+            foreach (Match match in rgx.Matches(sentence))
+            {
+                string[] arr = match.Value.Split(' ');
+                if (arr[0] == "80")
+                {
+                    _list.Add("http://" + arr[2].Trim());
+                }
+                else if (arr[0] == "443")
+                {
+                    _list.Add("https://" + arr[2].Trim());
+                }
+                else
+                {
+                    _list.Add("http://" + arr[2].Trim() + ":" + arr[0]);
+                }
+
+                //lista.Add(arr[1].Trim());
+
+                //Console.WriteLine("Found '{0}' at position {1}", match.Value, match.Index);
+            }
+            return _list;
+        }
+
+
 
         #region old
         public static bool checkstatusProc_byName(string nameproc)

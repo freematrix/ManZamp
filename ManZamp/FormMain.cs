@@ -96,6 +96,10 @@ namespace ManZamp
 
                 cv.get_software_version();
                 refreshStatusForm();
+
+                List<string> arrListSite = ManZampLib.getListSite(cv);
+                crealinkSite(arrListSite);
+
             }
             catch (ConfigurationErrorsException er)
             {
@@ -103,6 +107,9 @@ namespace ManZamp
                 ManZampLib.printMsg_and_exit();
             }
         }
+
+        
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ManZampLib.printMsg_and_exit("", true);
@@ -389,8 +396,28 @@ namespace ManZamp
                 }
             }
         }
+        private void crealinkSite(List<string> arrListSite)
+        {
+            foreach (string slink in arrListSite)
+            {
+                System.Windows.Forms.ToolStripMenuItem toollink;
+                toollink = new System.Windows.Forms.ToolStripMenuItem();
+
+                toollink.Name = "testttttToolStripMenuItem";
+                //toollink.Size = new System.Drawing.Size(224, 26);
+                toollink.Text = slink;
+                toollink.Click += new EventHandler(delegate (object s, EventArgs ev)
+                {
+                    System.Diagnostics.Process.Start(slink);
+                }); ;
+
+                this.browserToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toollink });
+            }
+
+
+        }
         #endregion
 
-        
+
     }
 }

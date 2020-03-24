@@ -295,6 +295,12 @@ e poi lanciare le query
 	F:\zamp\Apps\mariadb-10.4.12\bin\mysql -u root --password=root -h localhost --port=3309 -e "CREATE USER 'pma'@'localhost' IDENTIFIED BY 'pmapwd';GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' WITH GRANT OPTION;FLUSH PRIVILEGES;"
 che crea l'utente pma per il db phpmyadmin
 
+
+se voglio aggiornare phpmyadmin
+	Q:\temp\zamp\Apps\mariadb-10.4.12\bin\mysql -u root --password=root -h localhost --port=3309 -e "DROP USER pma@localhost;DROP DATABASE phpmyadmin;"
+
+
+
 Nel caso posisizionare il sito sotto htdocs oppure creare un sito e il relativo virtual host di apache
 	<VirtualHost *:8081>
 		ServerAdmin simone.reciv@gmail.com
