@@ -434,6 +434,23 @@ aggiungere la configurazione php cliccando sul tasto rettangolo verde e poi "add
 dalla voce di menu che compare selezionare php
 non modificare altro a questo punto dovrebbe essere possibile debuggare (navigando con il browser sulla pagina desiderata vs code si dovrebbe fermare)
 
+se non parte il debug aggiungere alla request string 
+?XDEBUG_SESSION_START=1
+
+oppure aggiungere un campo XDEBUG_SESSION_START nella post come input. i parametri php.ini sono 
+	zend_extension = "F:\SVL\zamp\zamp_casa_80\Apps\php-7.4.3\ext\php_xdebug-2.9.2-7.4-vc15-x86_64.dll"
+	xdebug.profiler_enable = 0
+	xdebug.profiler_enable_trigger = 1
+	xdebug.remote_enable = 1
+	xdebug.remote_handler = "dbgp"
+	xdebug.remote_host = "localhost"
+	xdebug.remote_port = 9000
+	xdebug.default_enable = "Off"
+	xdebug.remote_autostart = 0
+
+
+
+
 
 
 

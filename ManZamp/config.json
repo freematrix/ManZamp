@@ -24,10 +24,10 @@
     "pid_currentproc_mariadb": ""
   },
   "cameretta": {
-    "pathBase": "F:\\SVL\\zamp\\zamp_latest",
-    "pathMariaDB": "F:\\SVL\\zamp\\zamp_latest\\Apps\\mariadb-10.4.12",
-    "pathApache": "F:\\SVL\\zamp\\zamp_latest\\Apps\\Apache24",
-    "pathPHP": "F:\\SVL\\zamp\\zamp_latest\\Apps\\php-7.4.3",
+    "pathBase": "H:\\SVL\\zamp\\zamp_1.0.5",
+    "pathMariaDB": "H:\\SVL\\zamp\\zamp_1.0.5\\Apps\\mariadb-10.4.12",
+    "pathApache": "H:\\SVL\\zamp\\zamp_1.0.5\\Apps\\Apache24",
+    "pathPHP": "H:\\SVL\\zamp\\zamp_1.0.5\\Apps\\php-7.4.4",
     "default_editor_path": "C:\\Program Files (x86)\\Notepad++\\notepad++.exe",
     "apache_http_port": "80",
     "apache_https_port": "443",

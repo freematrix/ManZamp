@@ -75,15 +75,15 @@ namespace ManZamp
                 }
 
                 string msg_port_in_use = "";
-                if(ManZampLib.port_in_use(cv.apache_http_port))
+                if(ManZampLib.port_in_use(cv.apache_http_port, cv.pid_currentproc_apache))
                 {
                     msg_port_in_use += "http port \"" + cv.apache_http_port + "\" in use" + Environment.NewLine;
                 }
-                if (ManZampLib.port_in_use(cv.apache_https_port))
+                if (ManZampLib.port_in_use(cv.apache_https_port, cv.pid_currentproc_apache))
                 {
                     msg_port_in_use += "https port \"" + cv.apache_https_port + "\" in use" + Environment.NewLine;
                 }
-                if (ManZampLib.port_in_use(cv.mariadb_port))
+                if (ManZampLib.port_in_use(cv.mariadb_port, cv.pid_currentproc_mariadb))
                 {
                     msg_port_in_use += "MariaDB port \"" + cv.mariadb_port + "\" in use" + Environment.NewLine;
                 }
@@ -233,8 +233,10 @@ namespace ManZamp
             string mariadb_dir_bin = System.IO.Path.Combine(cv.pathMariaDB, "bin");
             string composer_path = System.IO.Path.Combine(cv.pathBase, "Apps", "composer");
 
+            string drive_letter = System.IO.Path.GetPathRoot(cv.pathBase).Substring(0,1);
+            
             ManZampLib.ExecuteBatchFile_dont_wait(System.IO.Path.Combine(cv.pathBase, "scripts", "open_console.bat"),
-                    new string[] { apache_dir_bin, cv.pathPHP, mariadb_dir_bin, composer_path }
+                    new string[] { apache_dir_bin, cv.pathPHP, mariadb_dir_bin, composer_path, drive_letter, cv.pathBase }
             );
         }
         private void phpinfoToolStripMenuItem_Click(object sender, EventArgs e)
