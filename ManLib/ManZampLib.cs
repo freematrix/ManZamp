@@ -569,6 +569,7 @@ namespace ManLib
 
                 //Console.WriteLine("Found '{0}' at position {1}", match.Value, match.Index);
             }
+            _list = _list.OrderBy(s => s).ToList();
             return _list;
         }
 

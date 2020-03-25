@@ -400,20 +400,27 @@ namespace ManZamp
         }
         private void crealinkSite(List<string> arrListSite)
         {
-            foreach (string slink in arrListSite)
+            
+            for (int i = 0; i < arrListSite.Count; i++)
             {
-                System.Windows.Forms.ToolStripMenuItem toollink;
-                toollink = new System.Windows.Forms.ToolStripMenuItem();
+                string slink = arrListSite[i].Trim();
+                
+                if (i > 0 && slink.StartsWith("https:") && arrListSite[i-1].StartsWith("http:"))
+                {
+                    ToolStripSeparator sep = new System.Windows.Forms.ToolStripSeparator();
+                    this.toolStripSeparator7.Name = "separator_sl" + i;
+                    this.sitesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { sep });
+                }
 
-                toollink.Name = "testttttToolStripMenuItem";
-                //toollink.Size = new System.Drawing.Size(224, 26);
-                toollink.Text = slink;
-                toollink.Click += new EventHandler(delegate (object s, EventArgs ev)
+                System.Windows.Forms.ToolStripMenuItem toolstr = new System.Windows.Forms.ToolStripMenuItem();
+                toolstr.Name = "toolstripitem_sites" + i;
+                toolstr.Text = slink;
+                toolstr.Click += new EventHandler(delegate (object s, EventArgs ev)
                 {
                     System.Diagnostics.Process.Start(slink);
                 }); ;
+                this.sitesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolstr });
 
-                this.browserToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toollink });
             }
 
 
