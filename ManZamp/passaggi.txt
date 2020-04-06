@@ -84,6 +84,15 @@ Aprire il file httpd-vhosts.conf e e ci deve essere solo questo virtual host di 
 	</VirtualHost>
 
 
+Se passo da una versione di apache alla successiva copiare anche la cartella cert che contiene i certificati
+
+
+copiare la direttiva 
+Include conf/extra/httpd-ssl-new.conf
+e anche il file httpd-ssl-new.conf nella cartella corrispondente
+
+
+
 Per lanciare httpd.exe basta lanciare
 	httpd.exe
 Per installare come servizio lanciare un cmd come admini e lanciare
