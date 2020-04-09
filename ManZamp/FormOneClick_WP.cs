@@ -85,6 +85,17 @@ namespace ManZamp
             txt_url.Enabled = false;
             comboBox_protocol.Enabled = false;
 
+            string link_download = "";
+
+            using (WebClient wc = new WebClient())
+            {
+                var str_json = wc.DownloadString("https://api.wordpress.org/core/version-check/1.7/");
+                JObject obj = JObject.Parse(str_json);
+                var offers = obj["offers"];
+                link_download = offers[0]["download"].ToString();
+            }
+            
+
 
             // temp folder
             if (!Directory.Exists(temp_folder))
@@ -105,7 +116,7 @@ namespace ManZamp
                     wc.DownloadFileCompleted += Wc_DownloadFileCompleted;
                     wc.DownloadFileAsync(
                         // Param1 = Link of file
-                        new System.Uri("https://wordpress.org/latest.zip"),
+                        new System.Uri(link_download),
                         // Param2 = Path to save
                         wp_latest_zip
                     );
