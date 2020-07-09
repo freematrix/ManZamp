@@ -28,16 +28,23 @@ namespace ManZamp
         {
             InitializeComponent();
 
-            if(args != null && args.Length == 1 && args[0] == "setup")
+            //if(args != null && args.Length == 1 && args[0] == "setup")
+            if (true)
             {
                 ConfigVar _cv = new ConfigVar();
                 string assemblyFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
                 string root_folder = System.IO.Directory.GetParent(assemblyFolder).Parent.FullName;
-                //root_folder = @"F:\SVL\zamp_template";
-                _cv.updatePath(root_folder);
-                //MessageBox.Show(root_folder);
-                System.Threading.Thread.Sleep(1000);
-                //System.Windows.Forms.Application.Exit();
+
+                string YN_DEBUG = ManZampLib.getval_from_appsetting("YN_DEBUG");
+                if( !YN_DEBUG.Equals("Y") )
+                {
+                    //root_folder = @"F:\SVL\zamp_template";
+                    _cv.updatePath(root_folder);
+                    //MessageBox.Show(root_folder);
+                    System.Threading.Thread.Sleep(1000);
+                    //System.Windows.Forms.Application.Exit();
+                }
+
             }
         }
         #endregion
@@ -142,10 +149,6 @@ namespace ManZamp
             addOutput(ManZampLib.getStatusProc(cv, typeProg.apache));
             addOutput(ManZampLib.getStatusProc(cv, typeProg.mariadb));
         }
-        private void changeBaseFolderToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            MessageBox.Show("To change base folder move your zamp folder an then re-run setup.vbs in the root folder");
-        }
         private void changeConfig_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string filename_config = "";
@@ -232,14 +235,18 @@ namespace ManZamp
             string apache_dir_bin = System.IO.Path.Combine(cv.pathApache, "bin");
             string mariadb_dir_bin = System.IO.Path.Combine(cv.pathMariaDB, "bin");
             string composer_path = System.IO.Path.Combine(cv.pathBase, "Apps", "composer");
-            string node_path = System.IO.Path.Combine(cv.pathBase, "Apps", "node-x64");
+            //string node_path = System.IO.Path.Combine(cv.pathBase, "Apps", "node-x64");
             string sass_path = System.IO.Path.Combine(cv.pathBase, "Apps", "dart-sass");
 
             string drive_letter = System.IO.Path.GetPathRoot(cv.pathBase).Substring(0,1);
             //MessageBox.Show(drive_letter);
             
+            //ManZampLib.ExecuteBatchFile_dont_wait(System.IO.Path.Combine(cv.pathBase, "scripts", "open_console.bat"),
+            //        new string[] { apache_dir_bin, cv.pathPHP, mariadb_dir_bin, composer_path, node_path, sass_path, drive_letter, cv.pathBase }
+            //);
+
             ManZampLib.ExecuteBatchFile_dont_wait(System.IO.Path.Combine(cv.pathBase, "scripts", "open_console.bat"),
-                    new string[] { apache_dir_bin, cv.pathPHP, mariadb_dir_bin, composer_path, node_path, sass_path, drive_letter, cv.pathBase }
+                    new string[] { apache_dir_bin, cv.pathPHP, mariadb_dir_bin, composer_path, sass_path, drive_letter, cv.pathBase }
             );
         }
         private void phpinfoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -289,6 +296,9 @@ namespace ManZamp
         }
         private void wordpressToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("function not available at the moment");
+            return;
+            
             if (!ManZampLib.checkRunningProc(cv.getPID_mariadb))
             {
                 MessageBox.Show("MariaDB is not running");
@@ -305,12 +315,17 @@ namespace ManZamp
 
             frm_wp.Dispose();
         }
+        private void reloadSitesFromVhostToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<string> arrListSite = ManZampLib.getListSite(cv);
+            crealinkSite(arrListSite);
+        }
         #endregion
 
         #region private method
         private void refreshStatusForm()
         {
-            lbVersion.Text = "Ambiente: " + cv._env;
+            lbVersion.Text = "Env: " + cv._env;
             lb_baseFolder.Text = "Base Folder: " + cv.pathBase;
 
             bool bRunProc = ManZampLib.checkRunningProc(cv.getPID_apache);
@@ -403,7 +418,8 @@ namespace ManZamp
         }
         private void crealinkSite(List<string> arrListSite)
         {
-            
+            this.sitesToolStripMenuItem.DropDownItems.Clear();
+
             for (int i = 0; i < arrListSite.Count; i++)
             {
                 string slink = arrListSite[i].Trim();
@@ -423,13 +439,13 @@ namespace ManZamp
                     System.Diagnostics.Process.Start(slink);
                 }); ;
                 this.sitesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolstr });
-
             }
 
 
         }
+
         #endregion
 
-
+        
     }
 }

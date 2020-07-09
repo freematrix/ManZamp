@@ -94,6 +94,7 @@
             this.numericUpDown_https.Size = new System.Drawing.Size(121, 21);
             this.numericUpDown_https.TabIndex = 6;
             this.numericUpDown_https.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDown_https.Visible = false;
             // 
             // label3
             // 
@@ -103,6 +104,7 @@
             this.label3.Size = new System.Drawing.Size(126, 15);
             this.label3.TabIndex = 5;
             this.label3.Text = "Apache https port";
+            this.label3.Visible = false;
             // 
             // numericUpDown_mariadb
             // 
