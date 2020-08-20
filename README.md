@@ -7,18 +7,11 @@ ManZamp is the gui form application for the project [ManZamp](https://sourceforg
 Once you have zamp zip application on your pc decompress it and then run 
 
 ```
-setup.vbs
+RunApp.cmd
 ```
 
-This will create a link to ManZamp Gui Form Application.
-Run ManZamp to control apache and mariadb, open PHPMyAdmin web site, Adminer web site, ecc...
+This will run ManZamp Gui Form Application and from there launch apache and mariadb, PHPMyAdmin ecc...
 
-
-
-If you change or move the zamp folder please re-run
-```
-setup.vbs
-```
 
 ### Built With
 * [Apache http Server](https://httpd.apache.org/) - The web server used
