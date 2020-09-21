@@ -191,6 +191,7 @@ namespace ManLib
             process.StartInfo.CreateNoWindow = bhide;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.Start();
             //* Read the output (or the error)
             _outstring = process.StandardOutput.ReadToEnd();

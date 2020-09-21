@@ -41,7 +41,7 @@ namespace ManZamp
                     //root_folder = @"F:\SVL\zamp_template";
                     _cv.updatePath(root_folder);
                     //MessageBox.Show(root_folder);
-                    System.Threading.Thread.Sleep(1000);
+                    //System.Threading.Thread.Sleep(1000);
                     //System.Windows.Forms.Application.Exit();
                 }
 
