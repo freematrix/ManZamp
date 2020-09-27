@@ -354,7 +354,7 @@ namespace ManLib.Business
             Regex regex;
             Match match;
 
-
+            
             php_vers = ManZampLib.startProc_and_wait_output(PHP_bin, "-v", true);
             regex = new Regex(@"PHP \d+\.\d+.\d+");
             match = regex.Match(php_vers);

@@ -239,6 +239,7 @@ namespace ManLib
                 StartInfo.RedirectStandardInput = true;
                 StartInfo.RedirectStandardOutput = true;
                 StartInfo.RedirectStandardError = true;
+                StartInfo.CreateNoWindow = true;
 
                 Proc.StartInfo = StartInfo;
                 Proc.Start();

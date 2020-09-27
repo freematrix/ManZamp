@@ -55,11 +55,10 @@ namespace ManZamp
             try
             {
                 this.Text += " - (User: " + ManLib.ManZampLib.getNameCurrent_user() + ")";
-
-
+                
 
                 cv = new ConfigVar();
-
+                
                 //base dir not exist
                 //rebase directories
                 if (!System.IO.Directory.Exists(cv.pathBase))
@@ -80,8 +79,9 @@ namespace ManZamp
                 {
                     ManZampLib.printMsg_and_exit(svalidate);
                 }
-
+                
                 string msg_port_in_use = "";
+                
                 if(ManZampLib.port_in_use(cv.apache_http_port, cv.pid_currentproc_apache))
                 {
                     msg_port_in_use += "http port \"" + cv.apache_http_port + "\" in use" + Environment.NewLine;
@@ -94,6 +94,7 @@ namespace ManZamp
                 {
                     msg_port_in_use += "MariaDB port \"" + cv.mariadb_port + "\" in use" + Environment.NewLine;
                 }
+                
                 if(!string.IsNullOrEmpty(msg_port_in_use))
                 {
                     addOutput(msg_port_in_use);
