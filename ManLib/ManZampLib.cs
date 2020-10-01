@@ -356,7 +356,7 @@ namespace ManLib
         public static string killproc(ConfigVar cv, typeProg tpg)
         {
             string friendly_name = cv.get_friendly_name(tpg);
-            string pid = cv.get_correct_pid(tpg) ;
+            string pid = cv.get_correct_pid(tpg);
             string sout = "";
 
 
@@ -370,7 +370,7 @@ namespace ManLib
             if (proc != null)
             {
                 sout += "killing proc " + friendly_name + " with id " + proc.Id + Environment.NewLine;
-                proc.Kill();   
+                proc.Kill();
             }
             else
             {
@@ -574,12 +574,9 @@ namespace ManLib
             _list = _list.OrderBy(s => s).ToList();
             return _list;
         }
-
-
-
-        #region old
         public static bool checkstatusProc_byName(string nameproc)
         {
+            System.Threading.Thread.Sleep(1000);
             Process[] proc = Process.GetProcessesByName(nameproc);
             if (proc.Count() > 0)
             {
@@ -590,6 +587,29 @@ namespace ManLib
                 return false;
             }
         }
+        public static string killproc_byName(string nameproc)
+        {
+            string sout = "";
+            System.Threading.Thread.Sleep(1000);
+            Process[] proc = Process.GetProcessesByName(nameproc);
+
+            if (proc.Count() > 0)
+            {
+                foreach (var p in proc)
+                {
+                    sout += "killing proc " + p.ProcessName + " with id " + p.Id + Environment.NewLine;
+                    p.Kill();
+                }
+            }
+            else
+            {
+                sout += nameproc + " not running" + Environment.NewLine;
+            }
+            return sout;
+        }
+
+        #region old
+
         private string startProc_old(string nameproc, string pathProg)
         {
             string sout = "";
@@ -609,25 +629,7 @@ namespace ManLib
             }
             return sout;
         }
-        public static string killproc_byName(string nameproc)
-        {
-            string sout = "";
-            Process[] proc = Process.GetProcessesByName(nameproc);
-
-            if (proc.Count() > 0)
-            {
-                foreach (var p in proc)
-                {
-                    sout += "killing proc " + p.ProcessName + " with id " + p.Id + Environment.NewLine;
-                    p.Kill();
-                }
-            }
-            else
-            {
-                sout += nameproc + " not running" + Environment.NewLine;
-            }
-            return sout;
-        }
+        
         public static bool ExecuteBatchFile_OLD(string batchFileName, string[] argumentsToBatchFile)
         {
             string argumentsString = string.Empty;

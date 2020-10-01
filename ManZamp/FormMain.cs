@@ -134,7 +134,7 @@ namespace ManZamp
             addOutput(ManZampLib.getStatusProc(cv, typeProg.apache));
             addOutput(ManZampLib.getStatusProc(cv, typeProg.mariadb));
 
-            System.Threading.Thread.Sleep(1000);
+            
             refreshStatusForm();
         }
         private void stopAllProgrammToolStripMenuItem_Click(object sender, EventArgs e)
@@ -142,7 +142,6 @@ namespace ManZamp
             addOutput(ManZampLib.killproc(cv, typeProg.apache));
             addOutput(ManZampLib.killproc(cv, typeProg.mariadb));
 
-            System.Threading.Thread.Sleep(1000);
             refreshStatusForm();
         }
         private void checkStatusToolStripMenuItem_Click(object sender, EventArgs e)
@@ -210,7 +209,6 @@ namespace ManZamp
             {
                 addOutput(ManZampLib.startProc(cv, typeProg.apache, new string[] { }));
             }
-            System.Threading.Thread.Sleep(1000);
             refreshStatusForm();
         }
         private void btnStartStopMariaDB_Click(object sender, EventArgs e)
@@ -224,7 +222,6 @@ namespace ManZamp
             {
                 addOutput(ManZampLib.startProc(cv, typeProg.mariadb, new string[] { }));
             }
-            System.Threading.Thread.Sleep(1000);
             refreshStatusForm();
         }
         private void timer_refresh_Tick(object sender, EventArgs e)
@@ -365,7 +362,7 @@ namespace ManZamp
                     
             }
 
-
+            lbApache_ver.Text = cv.apache_vers;
             lbPHP_ver.Text = cv.php_vers;
             lbMariaDB_ver.Text = cv.mariadb_vers;
         }
@@ -408,7 +405,7 @@ namespace ManZamp
                 {
                     //do something
                     ManZampLib.killproc_byName(nameproc);
-                    System.Threading.Thread.Sleep(1000);
+                    //System.Threading.Thread.Sleep(1000);
                 }
                 else if (dialogResult == DialogResult.No)
                 {

@@ -25,6 +25,7 @@ namespace ManLib.Business
         public string pid_currentproc_mariadb { get; set; }
 
 
+        public string apache_vers { get; set; }
         public string php_vers { get; set; }
         public string mariadb_vers { get; set; }
 
@@ -354,13 +355,22 @@ namespace ManLib.Business
             Regex regex;
             Match match;
 
-            
+
+            apache_vers = ManZampLib.startProc_and_wait_output(Apache_bin, "-v", true);
+            regex = new Regex(@"Apache.\d+\.\d+\.\d+");
+            match = regex.Match(apache_vers);
+            if (match.Success)
+            {
+                apache_vers = match.Value;
+            }
+
+
             php_vers = ManZampLib.startProc_and_wait_output(PHP_bin, "-v", true);
             regex = new Regex(@"PHP \d+\.\d+.\d+");
             match = regex.Match(php_vers);
             if (match.Success)
             {
-                php_vers = "PHP Vers: " + match.Value;
+                php_vers = match.Value;
             }
 
             mariadb_vers = ManZampLib.startProc_and_wait_output(MariaDB_bin, "--version", true);
@@ -368,7 +378,7 @@ namespace ManLib.Business
             match = regex.Match(mariadb_vers);
             if (match.Success)
             {
-                mariadb_vers = "MariaDB Vers: " + match.Value;
+                mariadb_vers = "MariaDB " + match.Value;
             }
 
             
