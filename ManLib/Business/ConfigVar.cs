@@ -142,6 +142,8 @@ namespace ManLib.Business
         {
             get
             {
+                return "http://127.0.0.1:" + apache_http_port + "/phpmyadmin";
+
                 string htdocs = Path.Combine(pathApache, "htdocs");
                 string[] subdir = (from x in Directory.GetDirectories(htdocs) select new DirectoryInfo(x).Name).ToArray();
                 string pma_url = "";
@@ -160,6 +162,7 @@ namespace ManLib.Business
         {
             get
             {
+                return "http://127.0.0.1:" + apache_http_port + "/adminer";
                 string htdocs = Path.Combine(pathApache, "htdocs");
                 string[] name_files = (from x in Directory.GetFiles(htdocs) select new DirectoryInfo(x).Name).ToArray();
                 string adminer_url = "";
