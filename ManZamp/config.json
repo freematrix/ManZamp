@@ -48,10 +48,10 @@
     "pid_currentproc_mariadb": ""
   },
   "acer_nitro": {
-    "pathBase": "Q:\\temp\\zamp_1.1.2",
-    "pathMariaDB": "Q:\\temp\\zamp_1.1.2\\Apps\\mariadb-10.5.5",
-    "pathApache": "Q:\\temp\\zamp_1.1.2\\Apps\\Apache24",
-    "pathPHP": "Q:\\temp\\zamp_1.1.2\\Apps\\php-7.4.11",
+    "pathBase": "Q:\\temp\\zamp_1.1.3",
+    "pathMariaDB": "Q:\\temp\\zamp_1.1.3\\Apps\\mariadb-10.5.5",
+    "pathApache": "Q:\\temp\\zamp_1.1.3\\Apps\\Apache24",
+    "pathPHP": "Q:\\temp\\zamp_1.1.3\\Apps\\php-7.4.11",
     "default_editor_path": "c:\\program files (x86)\\notepad++\\notepad++.exe",
     "apache_http_port": "80",
     "apache_https_port": "443",

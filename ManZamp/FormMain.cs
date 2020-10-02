@@ -302,7 +302,7 @@ namespace ManZamp
             string mariadb_dir_bin = System.IO.Path.Combine(cv.pathMariaDB, "bin");
             string composer_path = System.IO.Path.Combine(cv.pathBase, "Apps", "composer");
             //string node_path = System.IO.Path.Combine(cv.pathBase, "Apps", "node-x64");
-            string sass_path = System.IO.Path.Combine(cv.pathBase, "Apps", "dart-sass");
+            //string sass_path = System.IO.Path.Combine(cv.pathBase, "Apps", "dart-sass");
 
             string drive_letter = System.IO.Path.GetPathRoot(cv.pathBase).Substring(0, 1);
             //MessageBox.Show(drive_letter);
@@ -312,7 +312,7 @@ namespace ManZamp
             //);
 
             ManZampLib.ExecuteBatchFile_dont_wait(System.IO.Path.Combine(cv.pathBase, "scripts", "open_console.bat"),
-                    new string[] { apache_dir_bin, cv.pathPHP, mariadb_dir_bin, composer_path, sass_path, drive_letter, cv.pathBase }
+                    new string[] { apache_dir_bin, cv.pathPHP, mariadb_dir_bin, composer_path, drive_letter, cv.pathBase }
             );
         }
         private void refreshStatusForm()
