@@ -34,10 +34,6 @@ namespace ManLib
                 //Console.WriteLine("#{0} Key: {1} Value: {2}", i, appSettings.GetKey(i), appSettings[i]);
             }
             return null;
-            
-            //MessageBox.Show(pathprog + " not found in App.config");
-            //this.chiuditutto();
-            //return "";
         }
 
         public static void printMsg_and_exit(string msg = "", bool bexit = false, System.Windows.Forms.Form f = null)
@@ -93,7 +89,6 @@ namespace ManLib
 
             IPGlobalProperties ipProperties = IPGlobalProperties.GetIPGlobalProperties();
             IPEndPoint[] ipEndPoints = ipProperties.GetActiveTcpListeners();
-
 
             foreach (IPEndPoint endPoint in ipEndPoints)
             {
@@ -181,11 +176,15 @@ namespace ManLib
             return sout;
         }
 
-        public static string startProc_and_wait_output(string path_exe, string args, bool bhide = false)
+        public static string startProc_and_wait_output(string path_exe, string args, bool bhide = false, string working_dir = null)
         {
             string _outstring = "";
             Process process = new Process();
             process.StartInfo.FileName = "cmd.exe";
+            if(!string.IsNullOrEmpty(working_dir))
+            {
+                process.StartInfo.WorkingDirectory = working_dir;
+            }
             process.StartInfo.Arguments = "/c \"" + path_exe + " " + args + "\"";
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.CreateNoWindow = bhide;

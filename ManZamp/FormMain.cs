@@ -21,6 +21,7 @@ namespace ManZamp
     {
         #region vars
         public ConfigVar cv;
+        public string YN_DEBUG { get; set; }
         #endregion
 
         #region constructor
@@ -28,24 +29,21 @@ namespace ManZamp
         {
             InitializeComponent();
 
-            //if(args != null && args.Length == 1 && args[0] == "setup")
-            if (true)
+            cv = new ConfigVar();
+            string assemblyFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string root_folder = System.IO.Directory.GetParent(assemblyFolder).Parent.FullName;
+
+            this.YN_DEBUG = ManZampLib.getval_from_appsetting("YN_DEBUG");
+            if(  !this.YN_DEBUG.Equals("Y")  )
             {
-                ConfigVar _cv = new ConfigVar();
-                string assemblyFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                string root_folder = System.IO.Directory.GetParent(assemblyFolder).Parent.FullName;
-
-                string YN_DEBUG = ManZampLib.getval_from_appsetting("YN_DEBUG");
-                if( !YN_DEBUG.Equals("Y") )
-                {
-                    //root_folder = @"F:\SVL\zamp_template";
-                    _cv.updatePath(root_folder);
-                    //MessageBox.Show(root_folder);
-                    //System.Threading.Thread.Sleep(1000);
-                    //System.Windows.Forms.Application.Exit();
-                }
-
+                //root_folder = @"F:\SVL\zamp_template";
+                cv.updatePath(root_folder);
+                cv = new ConfigVar();
+                //MessageBox.Show(root_folder);
+                //System.Threading.Thread.Sleep(1000);
+                //System.Windows.Forms.Application.Exit();
             }
+
         }
         #endregion
 
@@ -56,21 +54,9 @@ namespace ManZamp
             {
                 this.Text += " - (User: " + ManLib.ManZampLib.getNameCurrent_user() + ")";
                 
-
-                cv = new ConfigVar();
-                
-                //base dir not exist
-                //rebase directories
                 if (!System.IO.Directory.Exists(cv.pathBase))
                 {
-                    //FormPathChange frm2 = new FormPathChange();
-                    //DialogResult dr = frm2.ShowDialog(this);
-                    //if (dr == DialogResult.OK)
-                    //{
-                    //    cv.updatePath(frm2.abs_main_path);
-                    //}
-                    //frm2.Close();
-                    ManZampLib.printMsg_and_exit("Base folder changed - please run \"setup.vbs\"", true, this);
+                    ManZampLib.printMsg_and_exit("Path '" + cv.pathBase + "' does not exist", true, this);
                 }
 
 
@@ -230,22 +216,11 @@ namespace ManZamp
         }
         private void btnConsole_Click(object sender, EventArgs e)
         {
-            string apache_dir_bin = System.IO.Path.Combine(cv.pathApache, "bin");
-            string mariadb_dir_bin = System.IO.Path.Combine(cv.pathMariaDB, "bin");
-            string composer_path = System.IO.Path.Combine(cv.pathBase, "Apps", "composer");
-            //string node_path = System.IO.Path.Combine(cv.pathBase, "Apps", "node-x64");
-            string sass_path = System.IO.Path.Combine(cv.pathBase, "Apps", "dart-sass");
-
-            string drive_letter = System.IO.Path.GetPathRoot(cv.pathBase).Substring(0,1);
-            //MessageBox.Show(drive_letter);
-            
-            //ManZampLib.ExecuteBatchFile_dont_wait(System.IO.Path.Combine(cv.pathBase, "scripts", "open_console.bat"),
-            //        new string[] { apache_dir_bin, cv.pathPHP, mariadb_dir_bin, composer_path, node_path, sass_path, drive_letter, cv.pathBase }
-            //);
-
-            ManZampLib.ExecuteBatchFile_dont_wait(System.IO.Path.Combine(cv.pathBase, "scripts", "open_console.bat"),
-                    new string[] { apache_dir_bin, cv.pathPHP, mariadb_dir_bin, composer_path, sass_path, drive_letter, cv.pathBase }
-            );
+            openConsole();
+        }
+        private void consoleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openConsole();
         }
         private void phpinfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -321,6 +296,25 @@ namespace ManZamp
         #endregion
 
         #region private method
+        private void openConsole()
+        {
+            string apache_dir_bin = System.IO.Path.Combine(cv.pathApache, "bin");
+            string mariadb_dir_bin = System.IO.Path.Combine(cv.pathMariaDB, "bin");
+            string composer_path = System.IO.Path.Combine(cv.pathBase, "Apps", "composer");
+            //string node_path = System.IO.Path.Combine(cv.pathBase, "Apps", "node-x64");
+            string sass_path = System.IO.Path.Combine(cv.pathBase, "Apps", "dart-sass");
+
+            string drive_letter = System.IO.Path.GetPathRoot(cv.pathBase).Substring(0, 1);
+            //MessageBox.Show(drive_letter);
+
+            //ManZampLib.ExecuteBatchFile_dont_wait(System.IO.Path.Combine(cv.pathBase, "scripts", "open_console.bat"),
+            //        new string[] { apache_dir_bin, cv.pathPHP, mariadb_dir_bin, composer_path, node_path, sass_path, drive_letter, cv.pathBase }
+            //);
+
+            ManZampLib.ExecuteBatchFile_dont_wait(System.IO.Path.Combine(cv.pathBase, "scripts", "open_console.bat"),
+                    new string[] { apache_dir_bin, cv.pathPHP, mariadb_dir_bin, composer_path, sass_path, drive_letter, cv.pathBase }
+            );
+        }
         private void refreshStatusForm()
         {
             lbVersion.Text = "Env: " + cv._env;
@@ -365,6 +359,7 @@ namespace ManZamp
             lbApache_ver.Text = cv.apache_vers;
             lbPHP_ver.Text = cv.php_vers;
             lbMariaDB_ver.Text = cv.mariadb_vers;
+            lbComposer_ver.Text = cv.composer_vers;
         }
         private void addOutput(string testo)
         {
@@ -441,6 +436,7 @@ namespace ManZamp
 
 
         }
+
 
         #endregion
 

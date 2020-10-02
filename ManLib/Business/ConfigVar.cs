@@ -8,10 +8,12 @@ namespace ManLib.Business
 {
     public class ConfigVar
     {
+        #region const
         public string procMariaDB = "mysqld";
         public string procApache = "httpd";
-        
+        #endregion
 
+        #region prop
         public string _env { get; set; }
         public string pathBase { get; set; }
         public string pathMariaDB { get; set; }
@@ -28,6 +30,7 @@ namespace ManLib.Business
         public string apache_vers { get; set; }
         public string php_vers { get; set; }
         public string mariadb_vers { get; set; }
+        public string composer_vers { get; set; }
 
 
         public string MariaDB_bin
@@ -49,6 +52,13 @@ namespace ManLib.Business
             get
             {
                 return System.IO.Path.Combine(pathPHP, "php.exe");
+            }
+        }
+        public string Composer_bin
+        {
+            get
+            {
+                return System.IO.Path.Combine(pathBase, "Apps", "composer", "composer.bat");
             }
         }
         public string Apache_httpd_conf
@@ -177,6 +187,7 @@ namespace ManLib.Business
                 return _url;
             }
         }
+        #endregion
 
         public ConfigVar()
         {
@@ -199,36 +210,36 @@ namespace ManLib.Business
             string sout = "";
             if (string.IsNullOrEmpty(pathMariaDB) || !System.IO.Directory.Exists(pathMariaDB)) 
             { 
-                sout += "pathMariaDB incorrect in App.config" + Environment.NewLine;
+                sout += "pathMariaDB incorrect in config.json" + Environment.NewLine;
             }
             if (string.IsNullOrEmpty(pathApache) || !System.IO.Directory.Exists(pathApache)) 
             { 
-                sout += "pathApache incorrect in App.config" + Environment.NewLine;
+                sout += "pathApache incorrect in config.json" + Environment.NewLine;
             }
             if (string.IsNullOrEmpty(pathPHP) || !System.IO.Directory.Exists(pathPHP))
             { 
-                sout += "pathPHP incorrect in App.config" + Environment.NewLine;
+                sout += "pathPHP incorrect in config.json" + Environment.NewLine;
             }
             if (string.IsNullOrEmpty(pathBase) || !System.IO.Directory.Exists(pathBase))
             { 
-                sout += "pathBase incorrect in App.config" + Environment.NewLine; 
+                sout += "pathBase incorrect in config.json" + Environment.NewLine; 
             }
             if (string.IsNullOrEmpty(default_editor_path)) 
             { 
-                sout += "default_editor_path incorrect in App.config"; 
+                sout += "default_editor_path incorrect in config.json"; 
             }
 
             if(!int.TryParse(apache_http_port, out int na))
             {
-                sout += "apache_http_port is not a number in App.config";
+                sout += "apache_http_port is not a number in config.json";
             }
             if (!int.TryParse(apache_https_port, out int nb))
             {
-                sout += "apache_https_port is not a number in App.config";
+                sout += "apache_https_port is not a number in config.json";
             }
             if (!int.TryParse(mariadb_port, out int nc))
             {
-                sout += "mariadb_port is not a number in App.config";
+                sout += "mariadb_port is not a number in config.json";
             }
 
             if(!string.IsNullOrEmpty(pid_currentproc_apache))
@@ -245,7 +256,6 @@ namespace ManLib.Business
                     updatePID(typeProg.mariadb, typeStartorKill.kill, Convert.ToInt32(pid_currentproc_mariadb));
                 }
             }
-
             return sout;
         }
 
@@ -285,7 +295,6 @@ namespace ManLib.Business
             switch (type_program)
             {
                 case typeProg.apache:
-
                     if(type_op == typeStartorKill.kill)
                     {
                         pid_currentproc_apache = "";
@@ -381,7 +390,15 @@ namespace ManLib.Business
                 mariadb_vers = "MariaDB " + match.Value;
             }
 
-            
+
+            composer_vers = ManZampLib.startProc_and_wait_output(Composer_bin, "--version", true, pathPHP);
+            regex = new Regex(@"Composer version \d+\.\d+\.\d+");
+            match = regex.Match(composer_vers);
+            if (match.Success)
+            {
+                composer_vers = match.Value;
+            }
+
         }
 
         #region private
