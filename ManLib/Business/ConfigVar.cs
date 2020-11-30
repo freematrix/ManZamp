@@ -37,14 +37,14 @@ namespace ManLib.Business
         {
             get
             {
-                return System.IO.Path.Combine(pathMariaDB, "bin", "mysqld.exe");
+                return System.IO.Path.Combine(pathMariaDB, "bin", procMariaDB + ".exe");
             }
         }
         public string Apache_bin
         {
             get
             {
-                return System.IO.Path.Combine(pathApache, "bin", "httpd.exe");
+                return System.IO.Path.Combine(pathApache, "bin", procApache + ".exe");
             }
         }
         public string PHP_bin
@@ -247,18 +247,21 @@ namespace ManLib.Business
 
             if(!string.IsNullOrEmpty(pid_currentproc_apache))
             {
-                if(!int.TryParse(pid_currentproc_apache, out int nd) || !ManZampLib.checkRunningProc(pid_currentproc_apache))
+                if(!int.TryParse(pid_currentproc_apache, out int nd) || !ManZampLib.checkRunningProc(pid_currentproc_apache) || ManZampLib.getNameProc_fromPID(pid_currentproc_apache) != this.procApache)
                 {
                     updatePID(typeProg.apache, typeStartorKill.kill, Convert.ToInt32(pid_currentproc_apache));
                 }
             }
             if (!string.IsNullOrEmpty(pid_currentproc_mariadb))
             {
-                if (!int.TryParse(pid_currentproc_mariadb, out int ne) || !ManZampLib.checkRunningProc(pid_currentproc_mariadb))
+                if (!int.TryParse(pid_currentproc_mariadb, out int ne) || !ManZampLib.checkRunningProc(pid_currentproc_mariadb) || ManZampLib.getNameProc_fromPID(pid_currentproc_mariadb) != this.procMariaDB)
                 {
                     updatePID(typeProg.mariadb, typeStartorKill.kill, Convert.ToInt32(pid_currentproc_mariadb));
                 }
             }
+
+
+            
             return sout;
         }
 

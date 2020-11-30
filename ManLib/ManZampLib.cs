@@ -330,6 +330,21 @@ namespace ManLib
                 return false;
             }
         }
+
+        public static string getNameProc_fromPID(string pid)
+        {
+            if(string.IsNullOrEmpty(pid))
+            {
+                return "";
+            }
+            else
+            {
+                Process proc = ManZampLib.GetProcByID(pid);
+                return proc.ProcessName;
+            }
+            //return "";
+        }
+
         public static string getStatusProc(ConfigVar cv, typeProg tpg)
         {
             string friendly_name = cv.get_friendly_name(tpg);

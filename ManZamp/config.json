@@ -24,16 +24,16 @@
     "pid_currentproc_mariadb": ""
   },
   "pc_cameretta": {
-    "pathBase": "H:\\SVL\\zamp\\zamp_1.1.1",
-    "pathMariaDB": "H:\\SVL\\zamp\\zamp_1.1.1\\Apps\\mariadb-10.5.5",
-    "pathApache": "H:\\SVL\\zamp\\zamp_1.1.1\\Apps\\Apache24",
-    "pathPHP": "H:\\SVL\\zamp\\zamp_1.1.1\\Apps\\php-7.4.9",
+    "pathBase": "H:\\SVL\\zamp\\zamp_1.1.5",
+    "pathMariaDB": "H:\\SVL\\zamp\\zamp_1.1.5\\Apps\\mariadb-10.5.8",
+    "pathApache": "H:\\SVL\\zamp\\zamp_1.1.5\\Apps\\Apache24",
+    "pathPHP": "H:\\SVL\\zamp\\zamp_1.1.5\\Apps\\php-7.4.12",
     "default_editor_path": "C:\\Program Files (x86)\\Notepad++\\notepad++.exe",
     "apache_http_port": "80",
     "apache_https_port": "443",
     "mariadb_port": "3306",
     "pid_currentproc_apache": "",
-    "pid_currentproc_mariadb": ""
+    "pid_currentproc_mariadb": "1444"
   },
   "casa_80": {
     "pathBase": "F:\\SVL\\zamp\\zamp_casa_80",
