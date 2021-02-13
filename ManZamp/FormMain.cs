@@ -395,18 +395,19 @@ namespace ManZamp
         {
             if (string.IsNullOrEmpty(pid) && ManZampLib.checkstatusProc_byName(nameproc))
             {
-                DialogResult dialogResult = MessageBox.Show(friendly_name + " running from another program ? Do you want to kill every " + friendly_name + " process ?", friendly_name + " running", MessageBoxButtons.YesNo);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    //do something
-                    ManZampLib.killproc_byName(nameproc);
-                    //System.Threading.Thread.Sleep(1000);
-                }
-                else if (dialogResult == DialogResult.No)
-                {
-                    //do something else
-                    return;
-                }
+                ManZampLib.killproc_byName(nameproc); //kill in any case 
+
+                //DialogResult dialogResult = MessageBox.Show(friendly_name + " running from another program ? Do you want to kill every " + friendly_name + " process ?", friendly_name + " running", MessageBoxButtons.YesNo);
+                //if (dialogResult == DialogResult.Yes)
+                //{
+                //    //do something
+                //    ManZampLib.killproc_byName(nameproc);
+                //}
+                //else if (dialogResult == DialogResult.No)
+                //{
+                //    //do something else
+                //    return;
+                //}
             }
         }
         private void crealinkSite(List<string> arrListSite)
