@@ -85,6 +85,8 @@
             this.lbMariaDB_ver = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.timer_refresh = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.ChangeVersStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMariaDB)).BeginInit();
@@ -145,33 +147,33 @@
             // checkStatusToolStripMenuItem
             // 
             this.checkStatusToolStripMenuItem.Name = "checkStatusToolStripMenuItem";
-            this.checkStatusToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.checkStatusToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.checkStatusToolStripMenuItem.Text = "Check status";
             this.checkStatusToolStripMenuItem.Click += new System.EventHandler(this.checkStatusToolStripMenuItem_Click);
             // 
             // stopAllProgrammToolStripMenuItem
             // 
             this.stopAllProgrammToolStripMenuItem.Name = "stopAllProgrammToolStripMenuItem";
-            this.stopAllProgrammToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.stopAllProgrammToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.stopAllProgrammToolStripMenuItem.Text = "Stop All";
             this.stopAllProgrammToolStripMenuItem.Click += new System.EventHandler(this.stopAllProgrammToolStripMenuItem_Click);
             // 
             // runAllProgramToolStripMenuItem
             // 
             this.runAllProgramToolStripMenuItem.Name = "runAllProgramToolStripMenuItem";
-            this.runAllProgramToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.runAllProgramToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.runAllProgramToolStripMenuItem.Text = "Run All";
             this.runAllProgramToolStripMenuItem.Click += new System.EventHandler(this.runAllProgramToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(138, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -181,6 +183,8 @@
             this.filesConfigToolStripMenuItem,
             this.toolStripSeparator2,
             this.backupRestoreToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.ChangeVersStripMenuItem,
             this.toolStripSeparator3,
             this.optionsToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
@@ -199,7 +203,7 @@
             this.toolStripSeparator6,
             this.hostFileToolStripMenuItem});
             this.filesConfigToolStripMenuItem.Name = "filesConfigToolStripMenuItem";
-            this.filesConfigToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.filesConfigToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.filesConfigToolStripMenuItem.Text = "Edit config";
             // 
             // apacheHttpdconfToolStripMenuItem
@@ -255,24 +259,24 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(194, 6);
             // 
             // backupRestoreToolStripMenuItem
             // 
             this.backupRestoreToolStripMenuItem.Name = "backupRestoreToolStripMenuItem";
-            this.backupRestoreToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.backupRestoreToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.backupRestoreToolStripMenuItem.Text = "Backup - Restore";
             this.backupRestoreToolStripMenuItem.Click += new System.EventHandler(this.backupRestoreToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(194, 6);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
@@ -573,6 +577,18 @@
             this.timer_refresh.Interval = 5000;
             this.timer_refresh.Tick += new System.EventHandler(this.timer_refresh_Tick);
             // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(194, 6);
+            // 
+            // ChangeVersStripMenuItem
+            // 
+            this.ChangeVersStripMenuItem.Name = "ChangeVersStripMenuItem";
+            this.ChangeVersStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.ChangeVersStripMenuItem.Text = "Change PHP - MariaDB";
+            this.ChangeVersStripMenuItem.Click += new System.EventHandler(this.ChangeVersStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -664,6 +680,8 @@
         private System.Windows.Forms.Label lbApache_ver;
         private System.Windows.Forms.Label lbComposer_ver;
         private System.Windows.Forms.ToolStripMenuItem consoleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem ChangeVersStripMenuItem;
     }
 }
 

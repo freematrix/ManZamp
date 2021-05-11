@@ -293,6 +293,29 @@ namespace ManZamp
             List<string> arrListSite = ManZampLib.getListSite(cv);
             crealinkSite(arrListSite);
         }
+        private void ChangeVersStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ManZampLib.checkRunningProc(cv.getPID_mariadb))
+            {
+                MessageBox.Show("Please close MariaDB");
+                return;
+            }
+            if (ManZampLib.checkRunningProc(cv.getPID_apache))
+            {
+                MessageBox.Show("Please close Apache");
+                return;
+            }
+
+            FormChangeVers frm2 = new FormChangeVers(cv);
+            DialogResult dr = frm2.ShowDialog(this);
+            if (dr == DialogResult.OK)
+            {
+                cv = frm2.cv;
+                //cv.updatePort();
+                //cv.updateDefaultEditor(cv.default_editor_path);
+            }
+            frm2.Close();
+        }
         #endregion
 
         #region private method
@@ -437,6 +460,7 @@ namespace ManZamp
 
 
         }
+
 
 
         #endregion
