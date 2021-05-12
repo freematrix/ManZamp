@@ -308,12 +308,9 @@ namespace ManZamp
 
             FormChangeVers frm2 = new FormChangeVers(cv);
             DialogResult dr = frm2.ShowDialog(this);
-            if (dr == DialogResult.OK)
-            {
-                cv = frm2.cv;
-                //cv.updatePort();
-                //cv.updateDefaultEditor(cv.default_editor_path);
-            }
+            cv = new ConfigVar();
+            cv.get_software_version();
+            refreshStatusForm();
             frm2.Close();
         }
         #endregion

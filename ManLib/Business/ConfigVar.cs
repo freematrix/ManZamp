@@ -365,9 +365,9 @@ namespace ManLib.Business
             
 
             jobj[_env]["pathBase"] = abs_main_path;
-            jobj[_env]["pathMariaDB"] = this.MariaDB_path_scelto;
+            jobj[_env]["MariaDB_scelta"] = this.MariaDB_scelta;
             jobj[_env]["pathApache"] = pathApache;
-            jobj[_env]["pathPHP"] = this.PHP_path_scelto;
+            jobj[_env]["PHP_scelta"] = this.PHP_scelta;
 
             ManZampLib.setJson_Env(jobj);
 
