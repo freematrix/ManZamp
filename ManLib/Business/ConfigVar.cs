@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -16,9 +17,13 @@ namespace ManLib.Business
         #region prop
         public string _env { get; set; }
         public string pathBase { get; set; }
-        public string pathMariaDB { get; set; }
+        public Dictionary<string, string> pathMariaDB { get; set; } = new Dictionary<string, string>();
+        //public string pathMariaDB { get; set; }
+        public string MariaDB_scelta { get; set; }
         public string pathApache { get; set; }
-        public string pathPHP { get; set; }
+        //public string pathPHP { get; set; }
+        public Dictionary<string, string> pathPHP { get; set; } = new Dictionary<string, string>();
+        public string PHP_scelta { get; set; }
         public string default_editor_path { get; set; }
         public string apache_http_port { get; set; }
         public string apache_https_port { get; set; }
@@ -37,7 +42,7 @@ namespace ManLib.Business
         {
             get
             {
-                return System.IO.Path.Combine(pathMariaDB, "bin", procMariaDB + ".exe");
+                return System.IO.Path.Combine(MariaDB_path_scelto, "bin", procMariaDB + ".exe");
             }
         }
         public string Apache_bin
@@ -51,7 +56,7 @@ namespace ManLib.Business
         {
             get
             {
-                return System.IO.Path.Combine(pathPHP, "php.exe");
+                return System.IO.Path.Combine(PHP_path_scelto, "php.exe");
             }
         }
         public string Composer_bin
@@ -102,14 +107,14 @@ namespace ManLib.Business
         {
             get
             {
-                return System.IO.Path.Combine(pathPHP, "php.ini");
+                return System.IO.Path.Combine(PHP_path_scelto, "php.ini");
             }
         }
         public string MariaDB_ini
         {
             get
             {
-                return System.IO.Path.Combine(pathMariaDB, "data", "my.ini");
+                return System.IO.Path.Combine(MariaDB_path_scelto, "data", "my.ini");
             }
         }
         public string getPID_apache
@@ -136,7 +141,18 @@ namespace ManLib.Business
                     return "";
             }
         }
-
+        public string MariaDB_path_scelto { 
+            get {
+                return this.pathMariaDB[this.MariaDB_scelta];
+            } 
+        }
+        public string PHP_path_scelto
+        {
+            get
+            {
+                return this.pathPHP[this.PHP_scelta];
+            }
+        }
 
         public string url_phpmyadmin
         {
@@ -197,9 +213,22 @@ namespace ManLib.Business
             _env = ManZampLib.getval_from_appsetting("env");
             JObject jobj = ManZampLib.getJson_Env();
             this.pathBase = (string)jobj[_env]["pathBase"];
-            this.pathMariaDB = (string)jobj[_env]["pathMariaDB"];
             this.pathApache = (string)jobj[_env]["pathApache"];
-            this.pathPHP = (string)jobj[_env]["pathPHP"];
+
+
+            foreach (Newtonsoft.Json.Linq.JProperty kv in jobj[_env]["pathMariaDB"])
+            {
+                this.pathMariaDB.Add(kv.Name, kv.Value.ToString());
+            }
+            this.MariaDB_scelta = (string)jobj[_env]["MariaDB_scelta"];
+
+            foreach (Newtonsoft.Json.Linq.JProperty kv in jobj[_env]["pathPHP"])
+            {
+                this.pathPHP.Add(kv.Name, kv.Value.ToString());
+            }
+            this.PHP_scelta = (string)jobj[_env]["PHP_scelta"];
+            
+            
             this.default_editor_path = (string)jobj[_env]["default_editor_path"];
             this.apache_http_port = (string)jobj[_env]["apache_http_port"];
             this.apache_https_port = (string)jobj[_env]["apache_https_port"];
@@ -211,7 +240,7 @@ namespace ManLib.Business
         public string validateSetting()
         {
             string sout = "";
-            if (string.IsNullOrEmpty(pathMariaDB) || !System.IO.Directory.Exists(pathMariaDB)) 
+            if (string.IsNullOrEmpty(MariaDB_path_scelto) || !System.IO.Directory.Exists(MariaDB_path_scelto)) 
             { 
                 sout += "pathMariaDB incorrect in config.json" + Environment.NewLine;
             }
@@ -219,7 +248,7 @@ namespace ManLib.Business
             { 
                 sout += "pathApache incorrect in config.json" + Environment.NewLine;
             }
-            if (string.IsNullOrEmpty(pathPHP) || !System.IO.Directory.Exists(pathPHP))
+            if (string.IsNullOrEmpty(PHP_path_scelto) || !System.IO.Directory.Exists(PHP_path_scelto))
             { 
                 sout += "pathPHP incorrect in config.json" + Environment.NewLine;
             }
@@ -330,14 +359,15 @@ namespace ManLib.Business
         {
             JObject jobj = ManZampLib.getJson_Env();
 
-            pathMariaDB = ManLib.ManZampLib.get_first_dir(abs_main_path, "mariadb");
+            //pathMariaDB = ManLib.ManZampLib.get_first_dir(abs_main_path, "mariadb");
+            //pathPHP = ManLib.ManZampLib.get_first_dir(abs_main_path, "php");
             pathApache = ManLib.ManZampLib.get_first_dir(abs_main_path, "Apache");
-            pathPHP = ManLib.ManZampLib.get_first_dir(abs_main_path, "php");
+            
 
             jobj[_env]["pathBase"] = abs_main_path;
-            jobj[_env]["pathMariaDB"] = pathMariaDB;
+            jobj[_env]["pathMariaDB"] = this.MariaDB_path_scelto;
             jobj[_env]["pathApache"] = pathApache;
-            jobj[_env]["pathPHP"] = pathPHP;
+            jobj[_env]["pathPHP"] = this.PHP_path_scelto;
 
             ManZampLib.setJson_Env(jobj);
 
@@ -397,7 +427,7 @@ namespace ManLib.Business
             }
 
 
-            composer_vers = ManZampLib.startProc_and_wait_output(Composer_bin, "--version", true, pathPHP);
+            composer_vers = ManZampLib.startProc_and_wait_output(Composer_bin, "--version", true, PHP_path_scelto);
             regex = new Regex(@"Composer version \d+\.\d+\.\d+");
             match = regex.Match(composer_vers);
             if (match.Success)
@@ -431,16 +461,16 @@ namespace ManLib.Business
                         text = Regex.Replace(text, @"^Define ZAMPROOT.*", "Define ZAMPROOT \"" + newpath.Replace("\\", "/") + "\"", RegexOptions.Multiline);
                         break;
                     case "php.ini":
-                        string name_xdebug_file = ManLib.ManZampLib.get_first_file(Path.Combine(pathPHP, "ext"), "xdebug");
-                        text = Regex.Replace(text, @"^extension_dir.*", "extension_dir = \"" + Path.Combine(pathPHP, "ext") + "\"", RegexOptions.Multiline);
+                        string name_xdebug_file = ManLib.ManZampLib.get_first_file(Path.Combine(PHP_path_scelto, "ext"), "xdebug");
+                        text = Regex.Replace(text, @"^extension_dir.*", "extension_dir = \"" + Path.Combine(PHP_path_scelto, "ext") + "\"", RegexOptions.Multiline);
                         if(!string.IsNullOrEmpty(name_xdebug_file))
                         {
                             text = Regex.Replace(text, @"^zend_extension.*", "zend_extension = \"" + name_xdebug_file + "\"", RegexOptions.Multiline);
                         }
                         break;
                     case "my.ini":
-                        text = Regex.Replace(text, @"^datadir.*", "datadir=" + Path.Combine(pathMariaDB, "data").Replace("\\", "/"), RegexOptions.Multiline);
-                        text = Regex.Replace(text, @"^plugin-dir=.*", "plugin-dir=" + Path.Combine(pathMariaDB, "lib", "plugin").Replace("\\", "/"), RegexOptions.Multiline);
+                        text = Regex.Replace(text, @"^datadir.*", "datadir=" + Path.Combine(MariaDB_path_scelto, "data").Replace("\\", "/"), RegexOptions.Multiline);
+                        text = Regex.Replace(text, @"^plugin-dir=.*", "plugin-dir=" + Path.Combine(MariaDB_path_scelto, "lib", "plugin").Replace("\\", "/"), RegexOptions.Multiline);
                         break;
                     case "start_all.vbs":
                         //
@@ -562,3 +592,4 @@ namespace ManLib.Business
         #endregion
     }
 }
+

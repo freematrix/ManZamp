@@ -78,7 +78,7 @@ namespace ManZamp
 
                 //eseguibackup(str_db, nomebackup_file);
                 List<string> l_res = ManZampLib.ExecuteBatchFile(System.IO.Path.Combine(cv.pathBase, "scripts", "MySql_Backup.bat"),
-                    new string[] { str_db, "root", "root", nomebackup_file, System.IO.Path.Combine(cv.pathMariaDB, "bin"), "127.0.0.1", cv.mariadb_port }
+                    new string[] { str_db, "root", "root", nomebackup_file, System.IO.Path.Combine(cv.MariaDB_path_scelto, "bin"), "127.0.0.1", cv.mariadb_port }
                 );
 
                 string contents = l_res[0] + Environment.NewLine + Environment.NewLine + "Error: " + l_res[1] + Environment.NewLine + "Exit code: " + l_res[2] + Environment.NewLine + "Backup done : " + nomebackup_file;
@@ -133,7 +133,7 @@ namespace ManZamp
 
                 //eseguiRestore(comboBoxDbRestore.SelectedItem.ToString(), txtPathSQLFile.Text);
                 List<string> l_res= ManZampLib.ExecuteBatchFile(System.IO.Path.Combine(cv.pathBase, "scripts", "MySql_Restore.bat"), 
-                    new string[] { "root", "root", comboBoxDbRestore.SelectedItem.ToString(), txtPathSQLFile.Text, "127.0.0.1", System.IO.Path.Combine(cv.pathMariaDB, "bin"), cv.mariadb_port }
+                    new string[] { "root", "root", comboBoxDbRestore.SelectedItem.ToString(), txtPathSQLFile.Text, "127.0.0.1", System.IO.Path.Combine(cv.MariaDB_path_scelto, "bin"), cv.mariadb_port }
                 );
 
                 string contents = l_res[0] + Environment.NewLine + Environment.NewLine + "Error: " + l_res[1] + Environment.NewLine + "Exit code: " + l_res[2] + Environment.NewLine + "Restored " + str_db + " with file " + txtPathSQLFile.Text;
@@ -164,7 +164,7 @@ namespace ManZamp
                 StreamWriter strBackupFile = new StreamWriter(strBackupFileName);
 
                 ProcessStartInfo psInfo = new ProcessStartInfo();
-                psInfo.FileName = System.IO.Path.Combine(cv.pathMariaDB, "bin", "mysqldump.exe");
+                psInfo.FileName = System.IO.Path.Combine(cv.MariaDB_path_scelto, "bin", "mysqldump.exe");
                 psInfo.RedirectStandardInput = false;
                 //psInfo.RedirectStandardOutput = false;
                 psInfo.Arguments = "--user root --password=root --routines --events --triggers --single-transaction " + str_db;
@@ -191,7 +191,7 @@ namespace ManZamp
         {
             string contenuto_sql = System.IO.File.ReadAllText(nomebackup_file);
 
-            var startInfo = new ProcessStartInfo(System.IO.Path.Combine(cv.pathMariaDB, "bin", "mysql.exe"));
+            var startInfo = new ProcessStartInfo(System.IO.Path.Combine(cv.MariaDB_path_scelto, "bin", "mysql.exe"));
             startInfo.RedirectStandardInput = true;
             //startInfo.RedirectStandardInput = false;
             startInfo.RedirectStandardOutput = false;

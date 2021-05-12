@@ -266,7 +266,7 @@ namespace ManZamp
             addOutput("Creating database ..");
             label8.Text = "Creating database";
 
-            string bin_mysql = Path.Combine(cv.pathMariaDB, "bin", "mysql.exe"); 
+            string bin_mysql = Path.Combine(cv.MariaDB_path_scelto, "bin", "mysql.exe"); 
 
             string sout = ManZampLib.startProc_and_wait_output(bin_mysql, "-u root --password=root -h localhost --port=" + cv.mariadb_port + " -e \""
                 + "CREATE DATABASE " + txt_dbname.Text + " CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
