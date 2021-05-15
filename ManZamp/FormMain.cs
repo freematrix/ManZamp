@@ -33,16 +33,14 @@ namespace ManZamp
             string assemblyFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             string root_folder = System.IO.Directory.GetParent(assemblyFolder).Parent.FullName;
 
-            this.YN_DEBUG = ManZampLib.getval_from_appsetting("YN_DEBUG");
-            if(  !this.YN_DEBUG.Equals("Y")  )
-            {
-                //root_folder = @"F:\SVL\zamp_template";
-                cv.updatePath(root_folder);
-                cv = new ConfigVar();
-                //MessageBox.Show(root_folder);
-                //System.Threading.Thread.Sleep(1000);
-                //System.Windows.Forms.Application.Exit();
-            }
+            //this.YN_DEBUG = ManZampLib.getval_from_appsetting("YN_DEBUG");
+            //if(  !this.YN_DEBUG.Equals("Y")  )
+            //{
+
+            //root_folder = @"C:\Users\pablo\Desktop\varie\zamp_1.1.10";
+            cv.updatePath(root_folder);
+            cv = new ConfigVar();
+            //}
 
         }
         #endregion

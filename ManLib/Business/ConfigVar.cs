@@ -361,8 +361,8 @@ namespace ManLib.Business
 
             //pathMariaDB = ManLib.ManZampLib.get_first_dir(abs_main_path, "mariadb");
             //pathPHP = ManLib.ManZampLib.get_first_dir(abs_main_path, "php");
-            string _pathMariaDB = System.IO.Path.Combine(abs_main_path, this.MariaDB_scelta);
-            string _pathPHP = ManLib.ManZampLib.get_first_dir(abs_main_path, this.PHP_scelta);
+            //string _pathMariaDB = System.IO.Path.Combine(abs_main_path, "Apps", this.MariaDB_scelta);
+            //string _pathPHP = System.IO.Path.Combine(abs_main_path, "Apps", this.PHP_scelta);
             pathApache = ManLib.ManZampLib.get_first_dir(abs_main_path, "Apache");
             
 
@@ -373,11 +373,21 @@ namespace ManLib.Business
 
             foreach(var kv in pathMariaDB)
             {
-                jobj[_env]["pathMariaDB"][kv.Key] = System.IO.Path.Combine(abs_main_path, kv.Key);
+                jobj[_env]["pathMariaDB"][kv.Key] = System.IO.Path.Combine(abs_main_path, "Apps", kv.Key);
             }
+
+            foreach (var kv in pathMariaDB.Keys.ToList())
+            {
+                pathMariaDB[kv] = System.IO.Path.Combine(abs_main_path, "Apps", kv);
+            }
+
             foreach (var kv in pathPHP)
             {
-                jobj[_env]["pathPHP"][kv.Key] = System.IO.Path.Combine(abs_main_path, kv.Key);
+                jobj[_env]["pathPHP"][kv.Key] = System.IO.Path.Combine(abs_main_path, "Apps", kv.Key);
+            }
+            foreach (var kv in pathPHP.Keys.ToList())
+            {
+                pathPHP[kv] = System.IO.Path.Combine(abs_main_path, "Apps" ,kv);
             }
 
 
@@ -452,7 +462,20 @@ namespace ManLib.Business
         #region private
         private void change_path(string newpath)
         {
-            string[] arrfiles = { Apache_httpd_conf, PHP_ini, MariaDB_ini, Path.Combine(newpath, "scripts", "start_all.vbs") };
+            //string[] arrfiles = { Apache_httpd_conf, PHP_ini, MariaDB_ini, Path.Combine(newpath, "scripts", "start_all.vbs") };
+            List<string> arrfiles = new List<string>();
+            arrfiles.Add(Apache_httpd_conf);
+            arrfiles.Add(Path.Combine(newpath, "scripts", "start_all.vbs"));
+            foreach (var kv in pathMariaDB)
+            {
+                arrfiles.Add(System.IO.Path.Combine(kv.Value, "data", "my.ini"));
+            }
+            foreach (var kv in pathPHP)
+            {
+                arrfiles.Add(System.IO.Path.Combine(kv.Value, "php.ini"));
+            }
+
+
 
             foreach (var f in arrfiles)
             {
@@ -463,8 +486,9 @@ namespace ManLib.Business
                 }
                 string text = System.IO.File.ReadAllText(f);
                 string file_name = Path.GetFileName(f);
+                string dirName = "";
 
-                switch(file_name)
+                switch (file_name)
                 {
                     case "httpd.conf":
                         // Use Regex.Replace to replace the pattern in the input.
@@ -473,16 +497,26 @@ namespace ManLib.Business
                         text = Regex.Replace(text, @"^Define ZAMPROOT.*", "Define ZAMPROOT \"" + newpath.Replace("\\", "/") + "\"", RegexOptions.Multiline);
                         break;
                     case "php.ini":
-                        string name_xdebug_file = ManLib.ManZampLib.get_first_file(Path.Combine(PHP_path_scelto, "ext"), "xdebug");
-                        text = Regex.Replace(text, @"^extension_dir.*", "extension_dir = \"" + Path.Combine(PHP_path_scelto, "ext") + "\"", RegexOptions.Multiline);
+                        //string name_xdebug_file = ManLib.ManZampLib.get_first_file(Path.Combine(PHP_path_scelto, "ext"), "xdebug");
+                        //text = Regex.Replace(text, @"^extension_dir.*", "extension_dir = \"" + Path.Combine(PHP_path_scelto, "ext") + "\"", RegexOptions.Multiline);
+                        //if(!string.IsNullOrEmpty(name_xdebug_file))
+                        //{
+                        //    text = Regex.Replace(text, @"^zend_extension.*", "zend_extension = \"" + name_xdebug_file + "\"", RegexOptions.Multiline);
+                        //}
+                        dirName = new DirectoryInfo(f).Parent.FullName;
+                        string name_xdebug_file = ManLib.ManZampLib.get_first_file(Path.Combine(dirName, "ext"), "xdebug");
+                        text = Regex.Replace(text, @"^extension_dir.*", "extension_dir = \"" + Path.Combine(dirName, "ext") + "\"", RegexOptions.Multiline);
                         if(!string.IsNullOrEmpty(name_xdebug_file))
                         {
                             text = Regex.Replace(text, @"^zend_extension.*", "zend_extension = \"" + name_xdebug_file + "\"", RegexOptions.Multiline);
                         }
                         break;
                     case "my.ini":
-                        text = Regex.Replace(text, @"^datadir.*", "datadir=" + Path.Combine(MariaDB_path_scelto, "data").Replace("\\", "/"), RegexOptions.Multiline);
-                        text = Regex.Replace(text, @"^plugin-dir=.*", "plugin-dir=" + Path.Combine(MariaDB_path_scelto, "lib", "plugin").Replace("\\", "/"), RegexOptions.Multiline);
+                        dirName = new DirectoryInfo(f).Parent.Parent.FullName;
+                        //text = Regex.Replace(text, @"^datadir.*", "datadir=" + Path.Combine(MariaDB_path_scelto, "data").Replace("\\", "/"), RegexOptions.Multiline);
+                        //text = Regex.Replace(text, @"^plugin-dir=.*", "plugin-dir=" + Path.Combine(MariaDB_path_scelto, "lib", "plugin").Replace("\\", "/"), RegexOptions.Multiline);
+                        text = Regex.Replace(text, @"^datadir.*", "datadir=" + Path.Combine(dirName, "data").Replace("\\", "/"), RegexOptions.Multiline);
+                        text = Regex.Replace(text, @"^plugin-dir=.*", "plugin-dir=" + Path.Combine(dirName, "lib", "plugin").Replace("\\", "/"), RegexOptions.Multiline);
                         break;
                     case "start_all.vbs":
                         //
