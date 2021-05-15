@@ -361,13 +361,25 @@ namespace ManLib.Business
 
             //pathMariaDB = ManLib.ManZampLib.get_first_dir(abs_main_path, "mariadb");
             //pathPHP = ManLib.ManZampLib.get_first_dir(abs_main_path, "php");
+            string _pathMariaDB = System.IO.Path.Combine(abs_main_path, this.MariaDB_scelta);
+            string _pathPHP = ManLib.ManZampLib.get_first_dir(abs_main_path, this.PHP_scelta);
             pathApache = ManLib.ManZampLib.get_first_dir(abs_main_path, "Apache");
             
 
             jobj[_env]["pathBase"] = abs_main_path;
-            jobj[_env]["MariaDB_scelta"] = this.MariaDB_scelta;
             jobj[_env]["pathApache"] = pathApache;
+            jobj[_env]["MariaDB_scelta"] = this.MariaDB_scelta;
             jobj[_env]["PHP_scelta"] = this.PHP_scelta;
+
+            foreach(var kv in pathMariaDB)
+            {
+                jobj[_env]["pathMariaDB"][kv.Key] = System.IO.Path.Combine(abs_main_path, kv.Key);
+            }
+            foreach (var kv in pathPHP)
+            {
+                jobj[_env]["pathPHP"][kv.Key] = System.IO.Path.Combine(abs_main_path, kv.Key);
+            }
+
 
             ManZampLib.setJson_Env(jobj);
 

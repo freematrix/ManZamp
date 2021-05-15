@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace ManZamp
 {
@@ -73,7 +74,22 @@ namespace ManZamp
 
         private void aggiorna_apache_httpd_conf_php(string PHP_scelta)
         {
+            string text = File.ReadAllText(cv.Apache_httpd_conf);
 
+            if(PHP_scelta.Contains("php-8"))
+            {
+                text = text.Replace("LoadFile \"${PHPROOT}/php7ts.dll\"", "LoadFile \"${PHPROOT}/php8ts.dll\"");
+                text = text.Replace("LoadModule php7_module \"${PHPROOT}/php7apache2_4.dll\"", "LoadModule php_module \"${PHPROOT}/php8apache2_4.dll\"");
+            }
+            else if (PHP_scelta.Contains("php-7"))
+            {
+                text = text.Replace("LoadFile \"${PHPROOT}/php8ts.dll\"", "LoadFile \"${PHPROOT}/php7ts.dll\"");
+                text = text.Replace("LoadModule php_module \"${PHPROOT}/php8apache2_4.dll\"", "LoadModule php7_module \"${PHPROOT}/php7apache2_4.dll\"");
+            }
+
+            text = System.Text.RegularExpressions.Regex.Replace(text, "^Define PHPROOT.*$", "Define PHPROOT \"${ZAMPROOT}/Apps/" + PHP_scelta + "\"", System.Text.RegularExpressions.RegexOptions.Multiline);
+
+            File.WriteAllText(cv.Apache_httpd_conf, text);
         }
     }
 }

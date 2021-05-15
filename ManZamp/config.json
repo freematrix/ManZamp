@@ -29,7 +29,7 @@
       "mariadb-10.5.10": "H:\\SVL\\zamp\\zamp_1.1.10\\Apps\\mariadb-10.5.10",
       "mariadb-10.4.19": "H:\\SVL\\zamp\\zamp_1.1.10\\Apps\\mariadb-10.4.19"
     },
-    "MariaDB_scelta": "mariadb-10.4.19",
+    "MariaDB_scelta": "mariadb-10.5.10",
     "pathApache": "H:\\SVL\\zamp\\zamp_1.1.10\\Apps\\Apache24",
     "pathPHP": {
       "php-8.0.6": "H:\\SVL\\zamp\\zamp_1.1.10\\Apps\\php-8.0.6",
