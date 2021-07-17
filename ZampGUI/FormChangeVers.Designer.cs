@@ -1,5 +1,5 @@
 ﻿
-namespace ManZamp
+namespace ZampGUI
 {
     partial class FormChangeVers
     {

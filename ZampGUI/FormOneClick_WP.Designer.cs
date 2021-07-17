@@ -1,4 +1,4 @@
-﻿namespace ManZamp
+﻿namespace ZampGUI
 {
     partial class FormOneClick_WP
     {

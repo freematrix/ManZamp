@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CABC48F6-254D-4CEA-BC0B-8B1F63030B3D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ManZamp</RootNamespace>
-    <AssemblyName>ManZamp</AssemblyName>
+    <RootNamespace>ZampGUI</RootNamespace>
+    <AssemblyName>ZampGUI</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -51,7 +51,7 @@
     <ApplicationIcon>Untitled-3.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>ManZamp.Program</StartupObject>
+    <StartupObject>ZampGUI.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySqlConnector, Version=0.61.0.0, Culture=neutral, PublicKeyToken=d33d3e53aa5f8c92, processorArchitecture=MSIL">
@@ -94,6 +94,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAbout.Designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBackupRestore.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +144,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormBackupRestore.resx">
       <DependentUpon>FormBackupRestore.cs</DependentUpon>
     </EmbeddedResource>

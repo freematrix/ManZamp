@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
-namespace ManZamp
+namespace ZampGUI
 {
     public partial class FormChangeVers : Form
     {

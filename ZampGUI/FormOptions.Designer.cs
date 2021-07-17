@@ -1,4 +1,4 @@
-﻿namespace ManZamp
+﻿namespace ZampGUI
 {
     partial class FormOptions
     {

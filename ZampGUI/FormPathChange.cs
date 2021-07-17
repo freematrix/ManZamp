@@ -13,7 +13,7 @@ using System.Configuration;
 using ManLib;
 using ManLib.Business;
 
-namespace ManZamp
+namespace ZampGUI
 {
     public partial class FormPathChange : Form
     {

@@ -14,7 +14,7 @@ using System.IO.Compression;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 
-namespace ManZamp
+namespace ZampGUI
 {
     public partial class FormOneClick_WP : Form
     {

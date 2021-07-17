@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ManZamp
+namespace ZampGUI
 {
     public partial class FormMsg : Form
     {

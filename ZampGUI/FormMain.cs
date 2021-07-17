@@ -15,7 +15,7 @@ using ManLib;
 using ManLib.Business;
 
 
-namespace ManZamp
+namespace ZampGUI
 {
     public partial class FormMain : Form
     {
@@ -33,14 +33,14 @@ namespace ManZamp
             string assemblyFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             string root_folder = System.IO.Directory.GetParent(assemblyFolder).Parent.FullName;
 
-            //this.YN_DEBUG = ManZampLib.getval_from_appsetting("YN_DEBUG");
-            //if(  !this.YN_DEBUG.Equals("Y")  )
-            //{
+            this.YN_DEBUG = ManZampLib.getval_from_appsetting("YN_DEBUG");
+            if(this.YN_DEBUG.Equals("Y"))
+            {
+                root_folder = ManZampLib.getval_from_appsetting("temp_folder");
+            }
 
-            //root_folder = @"C:\Users\pablo\Desktop\varie\zamp_1.1.10";
             cv.updatePath(root_folder);
             cv = new ConfigVar();
-            //}
 
         }
         #endregion
@@ -311,6 +311,16 @@ namespace ManZamp
             refreshStatusForm();
             frm2.Close();
         }
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormAbout frm2 = new FormAbout();
+            DialogResult dr = frm2.ShowDialog(this);
+            if (dr == DialogResult.OK)
+            {
+
+            }
+            frm2.Close();
+        }
         #endregion
 
         #region private method
@@ -455,6 +465,7 @@ namespace ManZamp
 
 
         }
+
 
 
 

@@ -1,6 +1,6 @@
-﻿namespace ManZamp
+﻿namespace ZampGUI
 {
-    partial class FormPathChange
+    partial class FormMsg
     {
         /// <summary>
         /// Required designer variable.
@@ -28,54 +28,53 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPathChange));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMsg));
             this.btnClose = new System.Windows.Forms.Button();
-            this.txt_mainpath = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.txtContents = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnClose
             // 
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnClose.Location = new System.Drawing.Point(14, 78);
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnClose.Location = new System.Drawing.Point(12, 226);
+            this.btnClose.MaximumSize = new System.Drawing.Size(189, 23);
+            this.btnClose.MinimumSize = new System.Drawing.Size(189, 23);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(149, 27);
+            this.btnClose.Size = new System.Drawing.Size(189, 23);
             this.btnClose.TabIndex = 0;
-            this.btnClose.Text = "Save and Close";
+            this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // txt_mainpath
+            // txtContents
             // 
-            this.txt_mainpath.Location = new System.Drawing.Point(14, 40);
-            this.txt_mainpath.Name = "txt_mainpath";
-            this.txt_mainpath.Size = new System.Drawing.Size(617, 21);
-            this.txt_mainpath.TabIndex = 1;
+            this.txtContents.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtContents.BackColor = System.Drawing.Color.White;
+            this.txtContents.Location = new System.Drawing.Point(12, 12);
+            this.txtContents.Multiline = true;
+            this.txtContents.Name = "txtContents";
+            this.txtContents.ReadOnly = true;
+            this.txtContents.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtContents.Size = new System.Drawing.Size(560, 204);
+            this.txtContents.TabIndex = 1;
+            this.txtContents.WordWrap = false;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(182, 15);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Absolute Path ZAMP Folder";
-            // 
-            // FormPathChange
+            // FormMsg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(656, 121);
-            this.Controls.Add(this.txt_mainpath);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(584, 261);
+            this.Controls.Add(this.txtContents);
             this.Controls.Add(this.btnClose);
             this.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "FormPathChange";
+            this.MinimumSize = new System.Drawing.Size(600, 300);
+            this.Name = "FormMsg";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "FormPathChange";
-            this.Load += new System.EventHandler(this.FormPathChange_Load);
+            this.Text = "FormMsg";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -84,7 +83,6 @@
         #endregion
 
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.TextBox txt_mainpath;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtContents;
     }
 }
